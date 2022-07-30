@@ -1,0 +1,6 @@
+**/bin
+**/obj
+**/.idea
+*.db
+.vscode
+/Tasky.sln.DotSettings.user

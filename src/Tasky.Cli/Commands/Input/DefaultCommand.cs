@@ -2,6 +2,7 @@
 using Spectre.Console.Cli;
 using Tasky.Cli.Commands.Output;
 using Tasky.Cli.Contracts;
+using Tasky.Core.Domain;
 
 namespace Tasky.Cli.Commands.Input;
 
@@ -20,7 +21,7 @@ public class ListTasksCommand : BaseCommand<ListTasksCommand.Settings>
 
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        await Mediator.Send(new Requests.ListTaskOutputRequest());
+        await Mediator.Send(new Requests.ListTaskOutputRequest(new List<Board>()));
         return await Task.FromResult(0);
     }
 

@@ -1,0 +1,29 @@
+{
+  "UpdatedAt": "2022-08-13T00:54:48.3903042-03:00",
+  "Boards": [
+    {
+      "Name": "dev",
+      "Tasks": [
+        {
+          "Id": "1",
+          "Text": "add tomato to basket",
+          "Status": 0,
+          "Steps": []
+        },
+        {
+          "Id": "2",
+          "Text": "buy milk",
+          "Status": 2,
+          "Steps": [
+            {
+              "Id": "2.1",
+              "Text": "buy integral milk",
+              "Status": 2
+            }
+          ]
+        }
+      ],
+      "Quantity": 2
+    }
+  ]
+}

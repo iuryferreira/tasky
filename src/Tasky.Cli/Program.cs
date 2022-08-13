@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using Spectre.Console.Cli;
-using Tasky.Cli.Commands.Input;
+using Tasky.Cli.Commands;
 using Tasky.Cli.Initialization;
 
 Console.OutputEncoding = Encoding.UTF8;

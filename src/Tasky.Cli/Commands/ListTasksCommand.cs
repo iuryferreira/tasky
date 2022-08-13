@@ -1,27 +1,21 @@
 ﻿using MediatR;
 using Spectre.Console.Cli;
-using Tasky.Cli.Commands.Output;
 using Tasky.Cli.Contracts;
-using Tasky.Core.Domain;
+using Tasky.Cli.UserInterface;
+using Tasky.Core.Application.Handlers;
 
-namespace Tasky.Cli.Commands.Input;
-
-public sealed class DefaultCommand : ListTasksCommand
-{
-    public DefaultCommand(IMediator mediator) : base(mediator)
-    {
-    }
-}
+namespace Tasky.Cli.Commands;
 
 public class ListTasksCommand : BaseCommand<ListTasksCommand.Settings>
 {
-    protected ListTasksCommand(IMediator mediator) : base(mediator)
+    protected ListTasksCommand(IMediator mediator, IConsoleWriter writer) : base(mediator, writer)
     {
     }
 
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        await Mediator.Send(new Requests.ListTaskOutputRequest(new List<Board>()));
+        var boards = await Mediator.Send(new Requests.ListBoardsWithTasks());
+        Writer.ShowBoards(boards);
         return await Task.FromResult(0);
     }
 

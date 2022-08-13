@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
-using Tasky.Cli.Commands.Input;
+using Tasky.Cli.Commands;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Initialization;
 
@@ -26,6 +26,7 @@ public static class Container
     {
         services.RegisterCommands();
         services.AddScoped<IRender, Render>();
+        services.AddScoped<IConsoleWriter, ConsoleWriter>();
         services.AddMediatR(Assembly.GetExecutingAssembly());
     }
 

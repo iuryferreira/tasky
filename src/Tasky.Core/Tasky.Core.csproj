@@ -13,4 +13,14 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Update="../../database.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Tasky.Shared\Tasky.Shared.csproj"/>
+    </ItemGroup>
+
 </Project>

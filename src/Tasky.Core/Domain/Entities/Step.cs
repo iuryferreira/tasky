@@ -14,5 +14,10 @@ public class Step
 
     public string Id { get; }
     public string Text { get; }
-    public Status Status { get; }
+    public Status Status { get; private set; }
+
+    public void ChangeStatus(Status status)
+    {
+        Status = status;
+    }
 }

@@ -3,9 +3,9 @@ using Tasky.Core.Domain.Entities;
 using Tasky.Core.Infrastructure.Repositories;
 using Task = Tasky.Core.Domain.Entities.Task;
 
-namespace Tasky.Core.Application.Handlers;
+namespace Tasky.Core.Application.Handlers.Tasks;
 
-public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard, IEnumerable<Board>>
+public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard>
 {
     private readonly IBoardRepository _repository;
 
@@ -14,7 +14,7 @@ public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard, IE
         _repository = repository;
     }
 
-    public async Task<IEnumerable<Board>> Handle(Requests.AddTaskOnBoard request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(Requests.AddTaskOnBoard request, CancellationToken cancellationToken)
     {
         Task task;
         var board = await _repository.GetByNameAsync(request.Data.BoardName);
@@ -22,12 +22,13 @@ public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard, IE
         {
             task = Task.CreateTaskWithText("1", request.Data.Text);
             board = new Board(request.Data.BoardName, new List<Task> {task});
-            return await _repository.AddAsync(board);
+            await _repository.AddAsync(board);
+            return Unit.Value;
         }
 
         task = Task.CreateTaskWithText($"{board.Quantity + 1}", request.Data.Text);
         board.AddTask(task);
         await _repository.UpdateAsync(board);
-        return await _repository.AllAsync();
+        return Unit.Value;
     }
 }

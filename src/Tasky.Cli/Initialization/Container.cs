@@ -3,6 +3,9 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console.Cli;
 using Tasky.Cli.Commands;
+using Tasky.Cli.Commands.Boards;
+using Tasky.Cli.Commands.Steps;
+using Tasky.Cli.Commands.Tasks;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Initialization;
 
@@ -32,17 +35,27 @@ public static class Container
 
     private static void RegisterCommands(this IServiceCollection services)
     {
-        services.AddScoped<ListTasksCommand>();
+        services.AddScoped<ShowBoardsCommand>();
+
         services.AddScoped<AddTaskCommand>();
+        services.AddScoped<DoneTaskCommand>();
+
         services.AddScoped<AddStepCommand>();
+        services.AddScoped<DoneStepCommand>();
+
         services.AddScoped<DefaultCommand>();
     }
 
     public static void ConfigureCommands(IConfigurator configurator)
     {
         AddTaskCommand.Configure(configurator);
+        DoneTaskCommand.Configure(configurator);
+
         AddStepCommand.Configure(configurator);
-        ListTasksCommand.Configure(configurator);
+        DoneStepCommand.Configure(configurator);
+
+        ShowBoardsCommand.Configure(configurator);
+
 
         configurator
             .SetApplicationName("tasky")

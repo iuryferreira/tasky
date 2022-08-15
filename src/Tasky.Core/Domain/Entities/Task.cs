@@ -16,16 +16,23 @@ public class Task
 
     public string Id { get; }
     public string Text { get; }
-    public Status Status { get; }
-    public List<Step> Steps { get; } = new();
-    public DateTime CreatedAt { get; set; }
+    public Status Status { get; private set; }
+    public List<Step> Steps { get; }
+    public DateTime CreatedAt { get; }
 
 
     public static Task CreateTaskWithText(string id, string text) =>
         new(id, DateTime.Now, Status.Todo, new List<Step>(), text);
 
-    public void AddStep(Step step)
+    public void AddStep(Step step) => Steps.Add(step);
+
+    public void ChangeStatus(Status status)
     {
-        Steps.Add(step);
+        if (status is Status.Done)
+        {
+            Steps.ForEach(step => step.ChangeStatus(Status.Done));
+        }
+
+        Status = status;
     }
 }

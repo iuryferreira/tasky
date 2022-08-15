@@ -4,11 +4,11 @@ using Tasky.Cli.Contracts;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Application.Handlers;
 
-namespace Tasky.Cli.Commands;
+namespace Tasky.Cli.Commands.Boards;
 
-public class ListTasksCommand : BaseCommand<ListTasksCommand.Settings>
+public class ShowBoardsCommand : BaseCommand<ShowBoardsCommand.Settings>
 {
-    protected ListTasksCommand(IMediator mediator, IConsoleWriter writer) : base(mediator, writer)
+    protected ShowBoardsCommand(IMediator mediator, IConsoleWriter writer) : base(mediator, writer)
     {
     }
 
@@ -21,7 +21,7 @@ public class ListTasksCommand : BaseCommand<ListTasksCommand.Settings>
 
     public static void Configure(IConfigurator configurator)
     {
-        configurator.AddCommand<ListTasksCommand>(Settings.CommandName)
+        configurator.AddCommand<ShowBoardsCommand>(Settings.CommandName)
             .WithDescription(Settings.CommandDescription)
             .WithExample(Settings.CommandExample);
     }

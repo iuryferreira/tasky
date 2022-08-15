@@ -3,13 +3,13 @@ using Tasky.Core.Domain.Entities;
 using Tasky.Core.Infrastructure;
 using Task = System.Threading.Tasks.Task;
 
-namespace Tasky.Core.Application.Handlers;
+namespace Tasky.Core.Application.Handlers.Boards;
 
-public class ListBoardsWithTasksHandler : IRequestHandler<Requests.ListBoardsWithTasks, IEnumerable<Board>>
+public class ShowBoardsHandler : IRequestHandler<Requests.ListBoardsWithTasks, IEnumerable<Board>>
 {
     private readonly IContext _context;
 
-    public ListBoardsWithTasksHandler(IContext context)
+    public ShowBoardsHandler(IContext context)
     {
         _context = context;
     }

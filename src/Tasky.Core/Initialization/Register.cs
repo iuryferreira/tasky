@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Tasky.Core.Infrastructure;
+using Tasky.Core.Infrastructure.Repositories;
 
 namespace Tasky.Core.Initialization;
 
@@ -21,5 +22,6 @@ public static class Register
     private static void RegisterInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<IContext, FileDbContext>();
+        services.AddScoped<IBoardRepository, BoardRepository>();
     }
 }

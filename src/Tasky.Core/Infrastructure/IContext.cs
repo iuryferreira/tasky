@@ -5,6 +5,6 @@ namespace Tasky.Core.Infrastructure;
 
 public interface IContext
 {
-    Task Save(IEnumerable<Board> boards);
-    Task<IEnumerable<Board>> Read();
+    Task SaveAsync(IEnumerable<Board> boards);
+    Task<IEnumerable<Board>> ReadAsync();
 }

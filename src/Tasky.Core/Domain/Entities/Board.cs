@@ -1,9 +1,24 @@
-﻿namespace Tasky.Core.Domain.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Tasky.Core.Domain.Entities;
 
 public class Board
 {
-    public string Name { get; init; } = "board";
-    public List<Task> Tasks { get; init; } = new();
+    [JsonConstructor]
+    public Board(string name, List<Task> tasks)
+    {
+        Name = name;
+        Tasks = tasks.ToList();
+    }
 
+    public string Name { get; }
+    public List<Task> Tasks { get; }
+
+    [JsonIgnore]
     public int Quantity => Tasks.Count;
+
+    public void AddTask(Task task)
+    {
+        Tasks.Add(task);
+    }
 }

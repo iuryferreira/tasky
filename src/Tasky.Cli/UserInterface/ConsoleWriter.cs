@@ -58,7 +58,7 @@ public class ConsoleWriter : IConsoleWriter
 
     public static class Tasks
     {
-        public static Content GetTasks(List<Task> tasks)
+        public static Content GetTasks(IEnumerable<Task> tasks)
         {
             var tasksContent = new Content();
 

@@ -33,11 +33,15 @@ public static class Container
     private static void RegisterCommands(this IServiceCollection services)
     {
         services.AddScoped<ListTasksCommand>();
+        services.AddScoped<AddTaskCommand>();
+        services.AddScoped<AddStepCommand>();
         services.AddScoped<DefaultCommand>();
     }
 
     public static void ConfigureCommands(IConfigurator configurator)
     {
+        AddTaskCommand.Configure(configurator);
+        AddStepCommand.Configure(configurator);
         ListTasksCommand.Configure(configurator);
 
         configurator

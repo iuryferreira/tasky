@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasky.Cli", "src\Tasky.Cli\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasky.Core", "src\Tasky.Core\Tasky.Core.csproj", "{72B5CCE8-301C-4566-AE74-49C390BE9D45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasky.Shared", "src\Tasky.Shared\Tasky.Shared.csproj", "{A21EED22-C690-4C95-B55B-2082AC3423B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +28,14 @@ Global
 		{72B5CCE8-301C-4566-AE74-49C390BE9D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72B5CCE8-301C-4566-AE74-49C390BE9D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72B5CCE8-301C-4566-AE74-49C390BE9D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A21EED22-C690-4C95-B55B-2082AC3423B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A21EED22-C690-4C95-B55B-2082AC3423B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A21EED22-C690-4C95-B55B-2082AC3423B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A21EED22-C690-4C95-B55B-2082AC3423B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3510BCB6-4106-49CF-B8C9-D61647900361} = {0FFD732E-D8EB-4BF3-AB2E-917E1F3CB98F}
 		{72B5CCE8-301C-4566-AE74-49C390BE9D45} = {0FFD732E-D8EB-4BF3-AB2E-917E1F3CB98F}
+		{A21EED22-C690-4C95-B55B-2082AC3423B7} = {0FFD732E-D8EB-4BF3-AB2E-917E1F3CB98F}
 	EndGlobalSection
 EndGlobal

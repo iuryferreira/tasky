@@ -18,7 +18,7 @@ public class AddStepOnTaskHandler : IRequestHandler<Requests.AddStepOnTask>
     {
         var board = await _repository.GetByNameAsync(request.Data.BoardName);
 
-        var task = board?.Tasks.FirstOrDefault(t => t.Id.Equals(request.Data.TaskId));
+        var task = board?.Tasks.Find(t => t.Id.Equals(request.Data.TaskId));
         if (task is null) return Unit.Value;
 
         var step = new Step($"{task.Id}.{task.Steps.Count + 1}", request.Data.Text, Status.Todo);

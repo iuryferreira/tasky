@@ -1,12 +1,15 @@
-﻿using Tasky.Core.Domain;
+﻿using Notie.Models;
+using Spectre.Console;
 using Tasky.Core.Domain.Entities;
 using Task = Tasky.Core.Domain.Entities.Task;
+using Status = Tasky.Core.Domain.Status;
 
 namespace Tasky.Cli.UserInterface;
 
 public interface IConsoleWriter
 {
     void ShowBoards(IEnumerable<Board> boards);
+    void ShowErrors(IEnumerable<Notification> notifications);
 }
 
 public class ConsoleWriter : IConsoleWriter
@@ -25,6 +28,16 @@ public class ConsoleWriter : IConsoleWriter
         _render.Print(content);
     }
 
+    public void ShowErrors(IEnumerable<Notification> notifications)
+    {
+        _render.Print("\n");
+        foreach (var notification in notifications)
+        {
+            var content = new Content().Set($"{Emoji.Known.RedCircle} {notification.Message}").BreakLine();
+            _render.Print(content);
+        }
+    }
+
     public static class Boards
     {
         public static Content GetBoards(IEnumerable<Board> boards)
@@ -32,7 +45,7 @@ public class ConsoleWriter : IConsoleWriter
             var output = new Content();
             foreach (var board in boards)
             {
-                var boardContent = GetBoard(board);
+                var boardContent = GetBoard(board).BreakLine();
                 output.Add(boardContent);
             }
 
@@ -42,7 +55,6 @@ public class ConsoleWriter : IConsoleWriter
         private static Content GetBoard(Board board)
         {
             var tasksCompleted = board.Tasks.Count(x => x.Status == Status.Done);
-
             var boardName = new Content().Set(board.Name).Bold().Underline().SpacesBefore(2);
             var tasksStatus = new Content()
                 .Set($"[{tasksCompleted}/{board.Quantity}]")
@@ -138,8 +150,7 @@ public class ConsoleWriter : IConsoleWriter
                 _ => content.Set("[ ]").EscapeMarkup().Purple()
             };
 
-            icon = icon.SpacesBefore(1);
-            return icon;
+            return icon.SpacesBefore(1);
         }
     }
 }

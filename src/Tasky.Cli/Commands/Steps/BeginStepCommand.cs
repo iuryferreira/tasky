@@ -7,18 +7,21 @@ using Tasky.Core.Application.Handlers;
 using Tasky.Core.Domain;
 using Tasky.Shared;
 
-namespace Tasky.Cli.Commands.Tasks;
+namespace Tasky.Cli.Commands.Steps;
 
-public sealed class DoneTaskCommand : BaseCommand<DoneTaskCommand.Settings>
+public sealed class BeginStepCommand : BaseCommand<BeginStepCommand.Settings>
 {
-    public DoneTaskCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
+    public BeginStepCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
     {
     }
 
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        var data = new Dtos.ChangeTaskStatusRequestDto(settings.Id.ToString(), settings.BoardName);
-        var request = new Requests.ChangeTaskStatus(data, Status.Done);
+        var ids = settings.Id.Split('.');
+        if (ids.Length <= 1) return 0;
+
+        var data = new Dtos.ChangeStepStatusRequestDto(settings.Id, ids[0], settings.BoardName);
+        var request = new Requests.ChangeStepStatus(data, Status.InProgress);
         await Mediator.Send(request);
         
         return await Handle(async () =>
@@ -31,7 +34,7 @@ public sealed class DoneTaskCommand : BaseCommand<DoneTaskCommand.Settings>
 
     public static void Configure(IConfigurator configurator)
     {
-        configurator.AddCommand<DoneTaskCommand>(Settings.CommandName)
+        configurator.AddCommand<BeginStepCommand>(Settings.CommandName)
             .WithAlias(Settings.CommandAlias)
             .WithDescription(Settings.CommandDescription)
             .WithExample(Settings.CommandExample);
@@ -40,14 +43,17 @@ public sealed class DoneTaskCommand : BaseCommand<DoneTaskCommand.Settings>
     [UsedImplicitly]
     public sealed class Settings : CommandSettings
     {
-        public const string CommandName = "done";
-        public const string CommandAlias = "dt";
-        public const string CommandDescription = "Marks a task already created as complete informing the id and board";
-        public static readonly string[] CommandExample = {"done", "1", "-b", "shopping"};
+        public const string CommandName = "beginstep";
+        public const string CommandAlias = "bs";
 
-        [Description("task id")]
-        [CommandArgument(0, "<TASK_ID>")]
-        public int Id { get; init; } = 0;
+        public const string CommandDescription =
+            "Marks a step already created as begin informing the id and board";
+
+        public static readonly string[] CommandExample = {"beginstep", "1.1", "-b", "shopping"};
+
+        [Description("step id")]
+        [CommandArgument(0, "<STEP_ID>")]
+        public string Id { get; init; } = "";
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]

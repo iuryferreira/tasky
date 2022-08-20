@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Notie;
 using Tasky.Core.Infrastructure;
 using Tasky.Core.Infrastructure.Repositories;
 
@@ -12,6 +13,7 @@ public static class Register
     {
         services.RegisterHandlers();
         services.RegisterInfrastructure();
+        services.AddNotie();
     }
 
     private static void RegisterHandlers(this IServiceCollection services)

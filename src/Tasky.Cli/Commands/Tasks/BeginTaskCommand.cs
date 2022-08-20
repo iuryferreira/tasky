@@ -4,22 +4,23 @@ using Notie.Contracts;
 using Tasky.Cli.Contracts;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Application.Handlers;
+using Tasky.Core.Domain;
 using Tasky.Shared;
 
-namespace Tasky.Cli.Commands.Steps;
+namespace Tasky.Cli.Commands.Tasks;
 
-public class AddStepCommand : BaseCommand<AddStepCommand.Settings>
+public sealed class BeginTaskCommand : BaseCommand<BeginTaskCommand.Settings>
 {
-    public AddStepCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
+    public BeginTaskCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
     {
     }
 
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        var data = new Dtos.AddStepOnTaskRequestDto(settings.TaskId, settings.BoardName, settings.Text);
-        var request = new Requests.AddStepOnTask(data);
+        var data = new Dtos.ChangeTaskStatusRequestDto(settings.Id, settings.BoardName);
+        var request = new Requests.ChangeTaskStatus(data, Status.InProgress);
         await Mediator.Send(request);
-        
+
         return await Handle(async () =>
         {
             var boards = await Mediator.Send(new Requests.ListBoardsWithTasks());
@@ -28,27 +29,27 @@ public class AddStepCommand : BaseCommand<AddStepCommand.Settings>
         });
     }
 
+    
+
     public static void Configure(IConfigurator configurator)
     {
-        configurator.AddCommand<AddStepCommand>(Settings.CommandName)
+        configurator.AddCommand<BeginTaskCommand>(Settings.CommandName)
+            .WithAlias(Settings.CommandAlias)
             .WithDescription(Settings.CommandDescription)
             .WithExample(Settings.CommandExample);
     }
-
+    
     [UsedImplicitly]
     public sealed class Settings : CommandSettings
     {
-        public const string CommandName = "step";
-        public const string CommandDescription = "Add a new step to a task";
-        public static readonly string[] CommandExample = {"step", "add tomato to basket", "-t", "1", "-b", "market"};
+        public const string CommandName = "begin";
+        public const string CommandAlias = "bt";
+        public const string CommandDescription = "Marks a task already created as begin informing the id and board";
+        public static readonly string[] CommandExample = {"begin", "1", "-b", "shopping"};
 
-        [Description("task content")]
-        [CommandArgument(0, "<TEXT>")]
-        public string Text { get; init; } = "";
-
-        [Description("")]
-        [CommandOption("-t|--task")]
-        public string TaskId { get; init; } = "";
+        [Description("task id")]
+        [CommandArgument(0, "[TASK_ID]")]
+        public string Id { get; init; } = "";
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]

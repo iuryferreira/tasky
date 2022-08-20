@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using MediatR;
-using Spectre.Console.Cli;
+using Notie.Contracts;
 using Tasky.Cli.Contracts;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Application.Handlers;
@@ -10,7 +10,7 @@ namespace Tasky.Cli.Commands.Tasks;
 
 public class AddTaskCommand : BaseCommand<AddTaskCommand.Settings>
 {
-    public AddTaskCommand(IMediator mediator, IConsoleWriter writer) : base(mediator, writer)
+    public AddTaskCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
     {
     }
 
@@ -18,8 +18,13 @@ public class AddTaskCommand : BaseCommand<AddTaskCommand.Settings>
     {
         var request = new Requests.AddTaskOnBoard(new Dtos.AddTaskOnBoardRequestDto(settings.BoardName, settings.Text));
         await Mediator.Send(request);
-        Writer.ShowBoards(await Mediator.Send(new Requests.ListBoardsWithTasks()));
-        return 0;
+
+        return await Handle(async () =>
+        {
+            var boards = await Mediator.Send(new Requests.ListBoardsWithTasks());
+            Writer.ShowBoards(boards);
+            return 0;
+        });
     }
 
     public static void Configure(IConfigurator configurator)
@@ -29,14 +34,15 @@ public class AddTaskCommand : BaseCommand<AddTaskCommand.Settings>
             .WithExample(Settings.CommandExample);
     }
 
-    public class Settings : CommandSettings
+    [UsedImplicitly]
+    public sealed class Settings : CommandSettings
     {
         public const string CommandName = "add";
         public const string CommandDescription = "Add a new task to a board";
         public static readonly string[] CommandExample = {"add", "add tomato to basket", "-b", "market"};
 
         [Description("task content")]
-        [CommandArgument(0, "<TEXT>")]
+        [CommandArgument(0, "[TEXT]")]
         public string Text { get; init; } = "";
 
         [Description("board to which the task belongs")]

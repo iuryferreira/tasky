@@ -20,7 +20,6 @@ public class Task
     public List<Step> Steps { get; }
     public DateTime CreatedAt { get; }
 
-
     public static Task CreateTaskWithText(string id, string text) =>
         new(id, DateTime.Now, Status.Todo, new List<Step>(), text);
 
@@ -28,11 +27,15 @@ public class Task
 
     public void ChangeStatus(Status status)
     {
-        if (status is Status.Done)
+        switch (status)
         {
-            Steps.ForEach(step => step.ChangeStatus(Status.Done));
+            case Status.Todo:
+                Steps.ForEach(step => step.ChangeStatus(Status.Todo));
+                break;
+            case Status.Done:
+                Steps.ForEach(step => step.ChangeStatus(Status.Done));
+                break;
         }
-
         Status = status;
     }
 }

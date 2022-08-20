@@ -4,20 +4,24 @@ using Notie.Contracts;
 using Tasky.Cli.Contracts;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Application.Handlers;
+using Tasky.Core.Domain;
 using Tasky.Shared;
 
 namespace Tasky.Cli.Commands.Steps;
 
-public class AddStepCommand : BaseCommand<AddStepCommand.Settings>
+public sealed class ResetStepCommand : BaseCommand<ResetStepCommand.Settings>
 {
-    public AddStepCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
+    public ResetStepCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
     {
     }
 
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
     {
-        var data = new Dtos.AddStepOnTaskRequestDto(settings.TaskId, settings.BoardName, settings.Text);
-        var request = new Requests.AddStepOnTask(data);
+        var ids = settings.Id.Split('.');
+        if (ids.Length <= 1) return 0;
+
+        var data = new Dtos.ChangeStepStatusRequestDto(settings.Id, ids[0], settings.BoardName);
+        var request = new Requests.ChangeStepStatus(data, Status.Todo);
         await Mediator.Send(request);
         
         return await Handle(async () =>
@@ -30,7 +34,8 @@ public class AddStepCommand : BaseCommand<AddStepCommand.Settings>
 
     public static void Configure(IConfigurator configurator)
     {
-        configurator.AddCommand<AddStepCommand>(Settings.CommandName)
+        configurator.AddCommand<ResetStepCommand>(Settings.CommandName)
+            .WithAlias(Settings.CommandAlias)
             .WithDescription(Settings.CommandDescription)
             .WithExample(Settings.CommandExample);
     }
@@ -38,17 +43,17 @@ public class AddStepCommand : BaseCommand<AddStepCommand.Settings>
     [UsedImplicitly]
     public sealed class Settings : CommandSettings
     {
-        public const string CommandName = "step";
-        public const string CommandDescription = "Add a new step to a task";
-        public static readonly string[] CommandExample = {"step", "add tomato to basket", "-t", "1", "-b", "market"};
+        public const string CommandName = "resetstep";
+        public const string CommandAlias = "rs";
 
-        [Description("task content")]
-        [CommandArgument(0, "<TEXT>")]
-        public string Text { get; init; } = "";
+        public const string CommandDescription =
+            "Marks a step already created as todo informing the id and board";
 
-        [Description("")]
-        [CommandOption("-t|--task")]
-        public string TaskId { get; init; } = "";
+        public static readonly string[] CommandExample = {"resetstep", "1.1", "-b", "shopping"};
+
+        [Description("step id")]
+        [CommandArgument(0, "<STEP_ID>")]
+        public string Id { get; init; } = "";
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]

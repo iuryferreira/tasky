@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using JetBrains.Annotations;
+using MediatR;
 using Notie.Contracts;
 using Notie.Models;
 using Tasky.Core.Domain;
@@ -7,6 +8,7 @@ using Tasky.Core.Infrastructure.Repositories;
 
 namespace Tasky.Core.Application.Handlers.Steps;
 
+[UsedImplicitly]
 public class AddStepOnTaskHandler : IRequestHandler<Requests.AddStepOnTask>
 {
     private readonly IBoardRepository _repository;

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using JetBrains.Annotations;
+using MediatR;
 using Notie.Contracts;
 using Tasky.Core.Domain.Entities;
 using Tasky.Core.Infrastructure.Repositories;
@@ -6,6 +7,7 @@ using Task = Tasky.Core.Domain.Entities.Task;
 
 namespace Tasky.Core.Application.Handlers.Tasks;
 
+[UsedImplicitly]
 public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard>
 {
     private readonly IBoardRepository _repository;

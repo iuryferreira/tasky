@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using JetBrains.Annotations;
+using MediatR;
 using Notie.Contracts;
 using Notie.Models;
 using Tasky.Core.Infrastructure.Repositories;
 
 namespace Tasky.Core.Application.Handlers.Steps;
 
+[UsedImplicitly]
 public class ChangeStepStatusHandler : IRequestHandler<Requests.ChangeStepStatus>
 {
     private readonly IBoardRepository _repository;

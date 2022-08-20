@@ -1,23 +1,24 @@
-﻿using MediatR;
+﻿using JetBrains.Annotations;
+using MediatR;
 using Tasky.Core.Domain.Entities;
-using Tasky.Core.Infrastructure;
-using Task = System.Threading.Tasks.Task;
+using Tasky.Core.Infrastructure.Repositories;
 
 namespace Tasky.Core.Application.Handlers.Boards;
 
+[UsedImplicitly]
 public class ShowBoardsHandler : IRequestHandler<Requests.ListBoardsWithTasks, IEnumerable<Board>>
 {
-    private readonly IContext _context;
+    private readonly IBoardRepository _repository;
 
-    public ShowBoardsHandler(IContext context)
+    public ShowBoardsHandler(IBoardRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task<IEnumerable<Board>> Handle(Requests.ListBoardsWithTasks request,
         CancellationToken cancellationToken)
     {
-        var boards = await _context.ReadAsync();
-        return await Task.FromResult(boards);
+        var boards = await _repository.AllAsync();
+        return boards;
     }
 }

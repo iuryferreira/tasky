@@ -18,7 +18,7 @@ public class Task
     public string Text { get; }
     public Status Status { get; private set; }
     public List<Step> Steps { get; }
-    public DateTime CreatedAt { get; }
+    private DateTime CreatedAt { get; }
 
     public static Task CreateTaskWithText(string id, string text) =>
         new(id, DateTime.Now, Status.Todo, new List<Step>(), text);

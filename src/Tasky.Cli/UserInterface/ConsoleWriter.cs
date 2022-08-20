@@ -38,7 +38,7 @@ public class ConsoleWriter : IConsoleWriter
         }
     }
 
-    public static class Boards
+    private static class Boards
     {
         public static Content GetBoards(IEnumerable<Board> boards)
         {
@@ -68,7 +68,7 @@ public class ConsoleWriter : IConsoleWriter
         }
     }
 
-    public static class Tasks
+    private static class Tasks
     {
         public static Content GetTasks(IEnumerable<Task> tasks)
         {
@@ -112,7 +112,7 @@ public class ConsoleWriter : IConsoleWriter
         }
     }
 
-    public static class Steps
+    private static class Steps
     {
         public static Content GetSteps(Task task)
         {

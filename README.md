@@ -33,9 +33,11 @@ Tasky is a task manager made for command lines, bringing the possibility for the
 - ~~Add~~
 - ~~Change Status~~
 - Add Priority
-- Delete
+- Delete (Clear)
 - Edit
 
 ### Improvements:
 
-- being able to add steps just by informing the task id and adding the `--step` tag
+- ~~being able to add steps just by informing the task id and adding the `--step-of` tag~~
+- Undo e redo last operation
+- Log operations

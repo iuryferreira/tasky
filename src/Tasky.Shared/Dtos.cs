@@ -3,109 +3,111 @@ using FluentValidation.Results;
 
 namespace Tasky.Shared;
 
-public static class Dtos
+public abstract record Dto
 {
-    public abstract record Dto
-    {
-        public bool Valid { get; private set; }
-        public ValidationResult? ValidationResult { get; private set; }
+    public bool Valid { get; private set; }
+    public ValidationResult? ValidationResult { get; private set; }
 
-        protected void Validate<T>(T entity, AbstractValidator<T> validator)
-        {
-            ValidationResult = validator.Validate(entity);
-            Valid = ValidationResult.IsValid;
-        }
+    protected void Validate<T>(T entity, AbstractValidator<T> validator)
+    {
+        ValidationResult = validator.Validate(entity);
+        Valid = ValidationResult.IsValid;
+    }
+}
+
+public record AddTaskOnBoardRequestDto : Dto
+{
+    public AddTaskOnBoardRequestDto(string boardName, string text, string stepOf)
+    {
+        BoardName = boardName;
+        Text = text;
+        StepOf = stepOf;
+        Validate(this, new Validator());
     }
 
-    public record AddTaskOnBoardRequestDto : Dto
+    public string BoardName { get; }
+    public string Text { get; }
+    public string StepOf { get; }
+
+    private class Validator : AbstractValidator<AddTaskOnBoardRequestDto>
     {
-        public AddTaskOnBoardRequestDto(string boardName, string text)
+        public Validator()
         {
-            BoardName = boardName;
-            Text = text;
-            Validate(this, new Validator());
-        }
-
-        public string BoardName { get; init; }
-        public string Text { get; init; }
-
-        private class Validator : AbstractValidator<AddTaskOnBoardRequestDto>
-        {
-            public Validator()
-            {
-                RuleFor(dto => dto.Text).NotEmpty();
-            }
+            RuleFor(dto => dto.BoardName)
+                .NotEmpty().WithMessage(Messages.English.BoardNotEmpty);
+            RuleFor(dto => dto.Text)
+                .NotEmpty().WithMessage(Messages.English.TaskNotEmpty);
         }
     }
+}
 
-    public record AddStepOnTaskRequestDto : Dto
+public record AddStepOnTaskRequestDto : Dto
+{
+    public AddStepOnTaskRequestDto(string taskId, string boardName, string text)
     {
-        public AddStepOnTaskRequestDto(string taskId, string boardName, string text)
-        {
-            TaskId = taskId;
-            BoardName = boardName;
-            Text = text;
-            Validate(this, new Validator());
-        }
-
-        public string TaskId { get; init; }
-        public string BoardName { get; init; }
-        public string Text { get; init; }
-
-        private class Validator : AbstractValidator<AddStepOnTaskRequestDto>
-        {
-            public Validator()
-            {
-                RuleFor(dto => dto.TaskId).NotEmpty();
-                RuleFor(dto => dto.Text).NotEmpty();
-            }
-        }
+        TaskId = taskId;
+        BoardName = boardName;
+        Text = text;
+        Validate(this, new Validator());
     }
 
-    public record ChangeTaskStatusRequestDto : Dto
+    public string TaskId { get; init; }
+    public string BoardName { get; init; }
+    public string Text { get; init; }
+
+    private class Validator : AbstractValidator<AddStepOnTaskRequestDto>
     {
-        public ChangeTaskStatusRequestDto(string taskId, string boardName)
+        public Validator()
         {
-            TaskId = taskId;
-            BoardName = boardName;
-            Validate(this, new Validator());
-        }
-
-        public string TaskId { get; init; }
-        public string BoardName { get; init; }
-
-        private class Validator : AbstractValidator<ChangeTaskStatusRequestDto>
-        {
-            public Validator()
-            {
-                RuleFor(dto => dto.TaskId)
-                    .NotEmpty().WithMessage(Messages.English.TaskIdNotEmpty)
-                    .NotEqual("0").WithMessage(Messages.English.TaskIdEqualZero);
-            }
+            RuleFor(dto => dto.TaskId).NotEmpty();
+            RuleFor(dto => dto.Text).NotEmpty();
         }
     }
+}
 
-    public record ChangeStepStatusRequestDto : Dto
+public record ChangeTaskStatusRequestDto : Dto
+{
+    public ChangeTaskStatusRequestDto(string taskId, string boardName)
     {
-        public ChangeStepStatusRequestDto(string stepId, string taskId, string boardName)
+        TaskId = taskId;
+        BoardName = boardName;
+        Validate(this, new Validator());
+    }
+
+    public string TaskId { get; init; }
+    public string BoardName { get; init; }
+
+    private class Validator : AbstractValidator<ChangeTaskStatusRequestDto>
+    {
+        public Validator()
         {
-            StepId = stepId;
-            TaskId = taskId;
-            BoardName = boardName;
-            Validate(this, new Validator());
+            RuleFor(dto => dto.TaskId)
+                .NotEmpty().WithMessage(Messages.English.TaskIdNotEmpty)
+                .NotEqual("0").WithMessage(Messages.English.TaskIdEqualZero);
         }
+    }
+}
 
-        public string StepId { get; init; }
-        public string TaskId { get; init; }
-        public string BoardName { get; init; }
+public record ChangeStepStatusRequestDto : Dto
+{
+    public ChangeStepStatusRequestDto(string stepId, string taskId, string boardName)
+    {
+        StepId = stepId;
+        TaskId = taskId;
+        BoardName = boardName;
+        Validate(this, new Validator());
+    }
 
-        private class Validator : AbstractValidator<ChangeStepStatusRequestDto>
+    public string StepId { get; init; }
+    public string TaskId { get; init; }
+    public string BoardName { get; init; }
+
+    private class Validator : AbstractValidator<ChangeStepStatusRequestDto>
+    {
+        public Validator()
         {
-            public Validator()
-            {
-                RuleFor(dto => dto.TaskId).NotEmpty();
-                RuleFor(dto => dto.StepId).NotEmpty();
-            }
+            RuleFor(dto => dto.TaskId).NotEmpty();
+            RuleFor(dto => dto.StepId).NotEmpty();
         }
     }
 }

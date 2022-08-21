@@ -38,7 +38,7 @@ public class ChangeStepStatusHandler : IRequestHandler<Requests.ChangeStepStatus
             return Unit.Value;
         }
 
-        step.ChangeStatus(request.Status);
+        step.ChangeStatus(task!, request.Status);
 
         await _repository.UpdateAsync(board!);
         return Unit.Value;

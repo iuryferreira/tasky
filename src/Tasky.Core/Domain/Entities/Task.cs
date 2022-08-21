@@ -18,7 +18,7 @@ public class Task
     public string Text { get; }
     public Status Status { get; private set; }
     public List<Step> Steps { get; }
-    private DateTime CreatedAt { get; }
+    public DateTime CreatedAt { get; }
 
     public static Task CreateTaskWithText(string id, string text) =>
         new(id, DateTime.Now, Status.Todo, new List<Step>(), text);
@@ -30,10 +30,13 @@ public class Task
         switch (status)
         {
             case Status.Todo:
-                Steps.ForEach(step => step.ChangeStatus(Status.Todo));
+                Steps.ForEach(step => step.ChangeStatus(this, Status.Todo));
                 break;
             case Status.Done:
-                Steps.ForEach(step => step.ChangeStatus(Status.Done));
+                Steps.ForEach(step => step.ChangeStatus(this, Status.Done));
+                break;
+            case Status.InProgress:
+            default:
                 break;
         }
         Status = status;

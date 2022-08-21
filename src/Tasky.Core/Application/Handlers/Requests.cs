@@ -11,11 +11,11 @@ public static class Requests
     
     public record ListBoardsWithTasks : Request, IRequest<IEnumerable<Board>>;
 
-    public record AddTaskOnBoard(Dtos.AddTaskOnBoardRequestDto Data) : Request, IRequest;
+    public record AddTaskOnBoard(AddTaskOnBoardRequestDto Data) : Request, IRequest;
 
-    public record AddStepOnTask(Dtos.AddStepOnTaskRequestDto Data) : Request, IRequest;
+    public record AddStepOnTask(AddStepOnTaskRequestDto Data) : Request, IRequest;
 
-    public record ChangeTaskStatus(Dtos.ChangeTaskStatusRequestDto Data, Status Status) : Request, IRequest;
+    public record ChangeTaskStatus(ChangeTaskStatusRequestDto Data, Status Status) : Request, IRequest;
 
-    public record ChangeStepStatus(Dtos.ChangeStepStatusRequestDto Data, Status Status) : Request, IRequest;
+    public record ChangeStepStatus(ChangeStepStatusRequestDto Data, Status Status) : Request, IRequest;
 }

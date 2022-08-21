@@ -3,8 +3,6 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Tasky.Cli.Commands;
 using Tasky.Cli.Commands.Boards;
-using Tasky.Cli.Commands.Steps;
-using Tasky.Cli.Commands.Tasks;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Initialization;
 
@@ -36,31 +34,19 @@ public static class Container
     {
         services.AddScoped<ShowBoardsCommand>();
 
-        services.AddScoped<AddTaskCommand>();
-        services.AddScoped<DoneTaskCommand>();
-        services.AddScoped<BeginTaskCommand>();
-        services.AddScoped<ResetTaskCommand>();
-
-        services.AddScoped<AddStepCommand>();
-        services.AddScoped<DoneStepCommand>();
-        services.AddScoped<BeginStepCommand>();
-        services.AddScoped<ResetStepCommand>();
-
+        services.AddScoped<AddCommand>();
+        services.AddScoped<DoneCommand>();
+        services.AddScoped<BeginCommand>();
+        services.AddScoped<ResetCommand>();
         services.AddScoped<DefaultCommand>();
     }
 
     public static void ConfigureCommands(IConfigurator configurator)
     {
-        AddTaskCommand.Configure(configurator);
-        DoneTaskCommand.Configure(configurator);
-        BeginTaskCommand.Configure(configurator);
-        ResetTaskCommand.Configure(configurator);
-
-        AddStepCommand.Configure(configurator);
-        DoneStepCommand.Configure(configurator);
-        BeginStepCommand.Configure(configurator);
-        ResetStepCommand.Configure(configurator);
-
+        AddCommand.Configure(configurator);
+        DoneCommand.Configure(configurator);
+        BeginCommand.Configure(configurator);
+        ResetCommand.Configure(configurator);
         ShowBoardsCommand.Configure(configurator);
 
         configurator

@@ -16,8 +16,9 @@ public class Step
     public string Text { get; }
     public Status Status { get; private set; }
 
-    public void ChangeStatus(Status status)
+    public void ChangeStatus(Task task, Status status)
     {
+        if (status == Status.InProgress) task.ChangeStatus(Status.InProgress);
         Status = status;
     }
 }

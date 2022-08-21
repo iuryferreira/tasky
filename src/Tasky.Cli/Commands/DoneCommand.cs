@@ -19,7 +19,7 @@ public sealed class DoneCommand : BaseCommand<DoneCommand.Settings>
     {
         Dto data;
         Requests.Request request;
-        
+
         var ids = settings.Id.Split('.');
         if (ids.Length > 1)
         {
@@ -56,11 +56,11 @@ public sealed class DoneCommand : BaseCommand<DoneCommand.Settings>
         public const string CommandName = "done";
         public const string CommandAlias = "dn";
         public const string CommandDescription = "Marks a task/step already created as done informing the id and board";
-        public static readonly string[] CommandExample = {"done", "1", "-b", "shopping"};
+        public static readonly string[] CommandExample = { "done", "1", "-b", "shopping" };
 
         [Description("task/step id")]
         [CommandArgument(0, "<TASK_ID>")]
-        public string Id { get; init; }  = "";
+        public string Id { get; init; } = "";
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]

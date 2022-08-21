@@ -10,8 +10,8 @@ namespace Tasky.Core.Application.Handlers.Tasks;
 [UsedImplicitly]
 public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard>
 {
-    private readonly IBoardRepository _repository;
     private readonly INotifier _notifier;
+    private readonly IBoardRepository _repository;
 
     public AddTaskOnBoardHandler(IBoardRepository repository, INotifier notifier)
     {
@@ -21,19 +21,18 @@ public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard>
 
     public async Task<Unit> Handle(Requests.AddTaskOnBoard request, CancellationToken cancellationToken)
     {
-
         if (!request.Data.Valid)
         {
             _notifier.AddNotificationsByFluent(request.Data.ValidationResult);
             return Unit.Value;
         }
-        
+
         Task task;
         var board = await _repository.GetByNameAsync(request.Data.BoardName);
         if (board is null)
         {
             task = Task.CreateTaskWithText("1", request.Data.Text);
-            board = new Board(request.Data.BoardName, new List<Task> {task});
+            board = new Board(request.Data.BoardName, new List<Task> { task });
             await _repository.AddAsync(board);
             return Unit.Value;
         }

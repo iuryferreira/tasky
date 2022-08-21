@@ -14,8 +14,7 @@ public class Board
     public string Name { get; }
     public List<Task> Tasks { get; }
 
-    [JsonIgnore]
-    public int Quantity => Tasks.Count;
+    [JsonIgnore] public int Quantity => Tasks.Count;
 
     public void AddTask(Task task)
     {

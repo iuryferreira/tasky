@@ -20,10 +20,15 @@ public class Task
     public List<Step> Steps { get; }
     public DateTime CreatedAt { get; }
 
-    public static Task CreateTaskWithText(string id, string text) =>
-        new(id, DateTime.Now, Status.Todo, new List<Step>(), text);
+    public static Task CreateTaskWithText(string id, string text)
+    {
+        return new(id, DateTime.Now, Status.Todo, new List<Step>(), text);
+    }
 
-    public void AddStep(Step step) => Steps.Add(step);
+    public void AddStep(Step step)
+    {
+        Steps.Add(step);
+    }
 
     public void ChangeStatus(Status status)
     {
@@ -39,6 +44,7 @@ public class Task
             default:
                 break;
         }
+
         Status = status;
     }
 }

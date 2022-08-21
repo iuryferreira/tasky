@@ -9,8 +9,8 @@ namespace Tasky.Core.Application.Handlers.Steps;
 [UsedImplicitly]
 public class ChangeStepStatusHandler : IRequestHandler<Requests.ChangeStepStatus>
 {
-    private readonly IBoardRepository _repository;
     private readonly INotifier _notifier;
+    private readonly IBoardRepository _repository;
 
     public ChangeStepStatusHandler(IBoardRepository repository, INotifier notifier)
     {

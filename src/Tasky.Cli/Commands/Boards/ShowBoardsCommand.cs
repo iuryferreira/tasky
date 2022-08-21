@@ -8,7 +8,8 @@ namespace Tasky.Cli.Commands.Boards;
 
 public class ShowBoardsCommand : BaseCommand<ShowBoardsCommand.Settings>
 {
-    protected ShowBoardsCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
+    protected ShowBoardsCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer,
+        notifier)
     {
     }
 
@@ -34,6 +35,6 @@ public class ShowBoardsCommand : BaseCommand<ShowBoardsCommand.Settings>
     {
         public const string CommandName = "list";
         public const string CommandDescription = "List all tasks of all boards";
-        public static readonly string[] CommandExample = {"list", "-i"};
+        public static readonly string[] CommandExample = { "list", "-i" };
     }
 }

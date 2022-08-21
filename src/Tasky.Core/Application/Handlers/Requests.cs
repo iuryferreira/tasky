@@ -7,8 +7,8 @@ namespace Tasky.Core.Application.Handlers;
 
 public static class Requests
 {
-    public abstract record Request; 
-    
+    public abstract record Request;
+
     public record ListBoardsWithTasks : Request, IRequest<IEnumerable<Board>>;
 
     public record AddTaskOnBoard(AddTaskOnBoardRequestDto Data) : Request, IRequest;

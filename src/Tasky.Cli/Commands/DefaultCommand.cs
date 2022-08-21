@@ -7,7 +7,8 @@ namespace Tasky.Cli.Commands;
 
 public sealed class DefaultCommand : ShowBoardsCommand
 {
-    public DefaultCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
+    public DefaultCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer,
+        notifier)
     {
     }
 }

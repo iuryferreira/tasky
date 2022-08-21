@@ -9,7 +9,7 @@ public class FileDbContext : IContext
     public async Task SaveAsync(IEnumerable<Board> boards)
     {
         var data = JsonSerializer.Serialize(new Database(DateTime.Now, boards),
-            new JsonSerializerOptions(JsonSerializerDefaults.Web) {WriteIndented = true});
+            new JsonSerializerOptions(JsonSerializerDefaults.Web) { WriteIndented = true });
         await File.WriteAllTextAsync("database.json", data);
     }
 

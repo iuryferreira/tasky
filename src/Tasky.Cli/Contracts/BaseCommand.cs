@@ -18,7 +18,7 @@ public abstract class BaseCommand<T> : AsyncCommand<T> where T : CommandSettings
         Mediator = mediator;
         Writer = writer;
     }
-    
+
     protected async Task<int> Handle(Func<Task<int>> action)
     {
         if (!_notifier.HasNotifications()) return await action.Invoke();
@@ -30,9 +30,7 @@ public abstract class BaseCommand<T> : AsyncCommand<T> where T : CommandSettings
     {
         DateTime? date = null;
         if (!string.IsNullOrEmpty(dateInString))
-        {
             date = DateTime.Parse(dateInString, styles: DateTimeStyles.AssumeLocal);
-        }
 
         return date;
     }

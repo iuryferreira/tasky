@@ -24,7 +24,10 @@ public class Content
         return this;
     }
 
-    public override string ToString() => Text;
+    public override string ToString()
+    {
+        return Text;
+    }
 }
 
 public static class ContentExtensions

@@ -6,12 +6,11 @@ using Tasky.Core.Infrastructure.Repositories;
 
 namespace Tasky.Core.Application.Handlers.Tasks;
 
-
 [UsedImplicitly]
 public class ChangeTaskStatusHandler : IRequestHandler<Requests.ChangeTaskStatus>
 {
-    private readonly IBoardRepository _repository;
     private readonly INotifier _notifier;
+    private readonly IBoardRepository _repository;
 
     public ChangeTaskStatusHandler(IBoardRepository repository, INotifier notifier)
     {
@@ -21,7 +20,6 @@ public class ChangeTaskStatusHandler : IRequestHandler<Requests.ChangeTaskStatus
 
     public async Task<Unit> Handle(Requests.ChangeTaskStatus request, CancellationToken cancellationToken)
     {
-
         if (!request.Data.Valid)
         {
             _notifier.AddNotificationsByFluent(request.Data.ValidationResult);

@@ -11,7 +11,8 @@ namespace Tasky.Cli.Commands;
 
 public sealed class ResetCommand : BaseCommand<ResetCommand.Settings>
 {
-    public ResetCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer, notifier)
+    public ResetCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer,
+        notifier)
     {
     }
 
@@ -19,7 +20,7 @@ public sealed class ResetCommand : BaseCommand<ResetCommand.Settings>
     {
         Dto data;
         Requests.Request request;
-        
+
         var ids = settings.Id.Split('.');
         if (ids.Length > 1)
         {
@@ -56,7 +57,7 @@ public sealed class ResetCommand : BaseCommand<ResetCommand.Settings>
         public const string CommandName = "reset";
         public const string CommandAlias = "rs";
         public const string CommandDescription = "Marks a task/step already created as todo informing the id and board";
-        public static readonly string[] CommandExample = {"reset", "1", "-b", "shopping"};
+        public static readonly string[] CommandExample = { "reset", "1", "-b", "shopping" };
 
         [Description("task/step id")]
         [CommandArgument(0, "<TASK_ID>")]
@@ -64,7 +65,7 @@ public sealed class ResetCommand : BaseCommand<ResetCommand.Settings>
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]
-        
+
         public string BoardName { get; init; } = "";
     }
 }

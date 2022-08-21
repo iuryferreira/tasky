@@ -1,8 +1,8 @@
 ﻿using Notie.Models;
 using Spectre.Console;
 using Tasky.Core.Domain.Entities;
-using Task = Tasky.Core.Domain.Entities.Task;
 using Status = Tasky.Core.Domain.Status;
+using Task = Tasky.Core.Domain.Entities.Task;
 
 namespace Tasky.Cli.UserInterface;
 

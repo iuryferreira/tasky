@@ -11,8 +11,8 @@ namespace Tasky.Core.Application.Handlers.Steps;
 [UsedImplicitly]
 public class AddStepOnTaskHandler : IRequestHandler<Requests.AddStepOnTask>
 {
-    private readonly IBoardRepository _repository;
     private readonly INotifier _notifier;
+    private readonly IBoardRepository _repository;
 
     public AddStepOnTaskHandler(IBoardRepository repository, INotifier notifier)
     {
@@ -27,11 +27,11 @@ public class AddStepOnTaskHandler : IRequestHandler<Requests.AddStepOnTask>
             _notifier.AddNotificationsByFluent(request.Data.ValidationResult);
             return Unit.Value;
         }
-        
+
         var board = await _repository.GetByNameAsync(request.Data.BoardName);
 
         var task = board?.Tasks.Find(t => t.Id.Equals(request.Data.TaskId));
-        
+
         if (task is null)
         {
             var notification = new Notification("TaskId", "The given task id was not found.");

@@ -22,12 +22,12 @@ public class AddCommand : BaseCommand<AddCommand.Settings>
         if (!string.IsNullOrEmpty(settings.StepOf))
         {
             data = new AddStepOnTaskRequestDto(settings.StepOf, settings.BoardName, settings.Text);
-            request = new Requests.AddStepOnTask((AddStepOnTaskRequestDto)data);
+            request = new Requests.AddStepOnTask((AddStepOnTaskRequestDto) data);
         }
         else
         {
             data = new AddTaskOnBoardRequestDto(settings.BoardName, settings.Text, settings.StepOf);
-            request = new Requests.AddTaskOnBoard((AddTaskOnBoardRequestDto)data);
+            request = new Requests.AddTaskOnBoard((AddTaskOnBoardRequestDto) data);
         }
 
         await Mediator.Send(request);
@@ -50,8 +50,8 @@ public class AddCommand : BaseCommand<AddCommand.Settings>
     public sealed class Settings : CommandSettings
     {
         public const string CommandName = "add";
-        public const string CommandDescription = "Add a new task/step to a board";
-        public static readonly string[] CommandExample = { "add", "add tomato to basket", "-b", "market", "-s", "1" };
+        public const string CommandDescription = Messages.English.Add;
+        public static readonly string[] CommandExample = {"add", "add tomato to basket", "-b", "market", "-s", "1"};
 
         [Description("task/step content")]
         [CommandArgument(0, "[TEXT]")]

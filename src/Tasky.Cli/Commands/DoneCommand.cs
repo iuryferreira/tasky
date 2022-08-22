@@ -24,12 +24,12 @@ public sealed class DoneCommand : BaseCommand<DoneCommand.Settings>
         if (ids.Length > 1)
         {
             data = new ChangeStepStatusRequestDto(settings.Id, ids[0], settings.BoardName);
-            request = new Requests.ChangeStepStatus((ChangeStepStatusRequestDto)data, Status.Done);
+            request = new Requests.ChangeStepStatus((ChangeStepStatusRequestDto) data, Status.Done);
         }
         else
         {
             data = new ChangeTaskStatusRequestDto(settings.Id, settings.BoardName);
-            request = new Requests.ChangeTaskStatus((ChangeTaskStatusRequestDto)data, Status.Done);
+            request = new Requests.ChangeTaskStatus((ChangeTaskStatusRequestDto) data, Status.Done);
         }
 
         await Mediator.Send(request);
@@ -55,11 +55,11 @@ public sealed class DoneCommand : BaseCommand<DoneCommand.Settings>
     {
         public const string CommandName = "done";
         public const string CommandAlias = "dn";
-        public const string CommandDescription = "Marks a task/step already created as done informing the id and board";
-        public static readonly string[] CommandExample = { "done", "1", "-b", "shopping" };
+        public const string CommandDescription = Messages.English.Done;
+        public static readonly string[] CommandExample = {"done", "1", "-b", "shopping"};
 
         [Description("task/step id")]
-        [CommandArgument(0, "<TASK_ID>")]
+        [CommandArgument(0, "[TASK_ID]")]
         public string Id { get; init; } = "";
 
         [Description("board to which the task belongs")]

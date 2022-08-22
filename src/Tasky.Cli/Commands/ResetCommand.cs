@@ -25,12 +25,12 @@ public sealed class ResetCommand : BaseCommand<ResetCommand.Settings>
         if (ids.Length > 1)
         {
             data = new ChangeStepStatusRequestDto(settings.Id, ids[0], settings.BoardName);
-            request = new Requests.ChangeStepStatus((ChangeStepStatusRequestDto)data, Status.Todo);
+            request = new Requests.ChangeStepStatus((ChangeStepStatusRequestDto) data, Status.Todo);
         }
         else
         {
             data = new ChangeTaskStatusRequestDto(settings.Id, settings.BoardName);
-            request = new Requests.ChangeTaskStatus((ChangeTaskStatusRequestDto)data, Status.Todo);
+            request = new Requests.ChangeTaskStatus((ChangeTaskStatusRequestDto) data, Status.Todo);
         }
 
         await Mediator.Send(request);
@@ -56,11 +56,11 @@ public sealed class ResetCommand : BaseCommand<ResetCommand.Settings>
     {
         public const string CommandName = "reset";
         public const string CommandAlias = "rs";
-        public const string CommandDescription = "Marks a task/step already created as todo informing the id and board";
-        public static readonly string[] CommandExample = { "reset", "1", "-b", "shopping" };
+        public const string CommandDescription = Messages.English.Reset;
+        public static readonly string[] CommandExample = {"reset", "1", "-b", "shopping"};
 
         [Description("task/step id")]
-        [CommandArgument(0, "<TASK_ID>")]
+        [CommandArgument(0, "[TASK_ID]")]
         public string Id { get; init; } = "";
 
         [Description("board to which the task belongs")]

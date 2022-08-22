@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Tasky.Cli.Commands;
-using Tasky.Cli.Commands.Boards;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Initialization;
 
@@ -32,7 +31,7 @@ public static class Container
 
     private static void RegisterCommands(this IServiceCollection services)
     {
-        services.AddScoped<ShowBoardsCommand>();
+        services.AddScoped<ListCommand>();
 
         services.AddScoped<AddCommand>();
         services.AddScoped<DoneCommand>();
@@ -47,7 +46,7 @@ public static class Container
         DoneCommand.Configure(configurator);
         BeginCommand.Configure(configurator);
         ResetCommand.Configure(configurator);
-        ShowBoardsCommand.Configure(configurator);
+        ListCommand.Configure(configurator);
 
         configurator
             .SetApplicationName("tasky")

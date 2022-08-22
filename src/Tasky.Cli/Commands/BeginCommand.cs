@@ -25,12 +25,12 @@ public sealed class BeginCommand : BaseCommand<BeginCommand.Settings>
         if (ids.Length > 1)
         {
             data = new ChangeStepStatusRequestDto(settings.Id, ids[0], settings.BoardName);
-            request = new Requests.ChangeStepStatus((ChangeStepStatusRequestDto)data, Status.InProgress);
+            request = new Requests.ChangeStepStatus((ChangeStepStatusRequestDto) data, Status.InProgress);
         }
         else
         {
             data = new ChangeTaskStatusRequestDto(settings.Id, settings.BoardName);
-            request = new Requests.ChangeTaskStatus((ChangeTaskStatusRequestDto)data, Status.InProgress);
+            request = new Requests.ChangeTaskStatus((ChangeTaskStatusRequestDto) data, Status.InProgress);
         }
 
         await Mediator.Send(request);
@@ -58,10 +58,9 @@ public sealed class BeginCommand : BaseCommand<BeginCommand.Settings>
         public const string CommandName = "begin";
         public const string CommandAlias = "bg";
 
-        public const string CommandDescription =
-            "Marks a task/step already created as begin informing the id and board";
+        public const string CommandDescription = Messages.English.Begin;
 
-        public static readonly string[] CommandExample = { "begin", "1", "-b", "shopping" };
+        public static readonly string[] CommandExample = {"begin", "1", "-b", "shopping"};
 
         [Description("task/step id")]
         [CommandArgument(0, "[TASK_ID]")]

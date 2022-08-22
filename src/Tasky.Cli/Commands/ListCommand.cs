@@ -3,12 +3,13 @@ using Notie.Contracts;
 using Tasky.Cli.Contracts;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Application.Handlers;
+using Tasky.Shared;
 
-namespace Tasky.Cli.Commands.Boards;
+namespace Tasky.Cli.Commands;
 
-public class ShowBoardsCommand : BaseCommand<ShowBoardsCommand.Settings>
+public class ListCommand : BaseCommand<ListCommand.Settings>
 {
-    protected ShowBoardsCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer,
+    protected ListCommand(IMediator mediator, IConsoleWriter writer, INotifier notifier) : base(mediator, writer,
         notifier)
     {
     }
@@ -25,7 +26,7 @@ public class ShowBoardsCommand : BaseCommand<ShowBoardsCommand.Settings>
 
     public static void Configure(IConfigurator configurator)
     {
-        configurator.AddCommand<ShowBoardsCommand>(Settings.CommandName)
+        configurator.AddCommand<ListCommand>(Settings.CommandName)
             .WithDescription(Settings.CommandDescription)
             .WithExample(Settings.CommandExample);
     }
@@ -34,7 +35,7 @@ public class ShowBoardsCommand : BaseCommand<ShowBoardsCommand.Settings>
     public sealed class Settings : CommandSettings
     {
         public const string CommandName = "list";
-        public const string CommandDescription = "List all tasks of all boards";
-        public static readonly string[] CommandExample = { "list", "-i" };
+        public const string CommandDescription = Messages.English.List;
+        public static readonly string[] CommandExample = {"list", "-i"};
     }
 }

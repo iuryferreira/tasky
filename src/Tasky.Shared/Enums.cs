@@ -1,4 +1,4 @@
-﻿namespace Tasky.Core.Domain;
+﻿namespace Tasky.Shared;
 
 public enum Status
 {

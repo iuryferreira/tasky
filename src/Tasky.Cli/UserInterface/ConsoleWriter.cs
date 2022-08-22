@@ -1,7 +1,8 @@
 ﻿using Notie.Models;
 using Spectre.Console;
 using Tasky.Core.Domain.Entities;
-using Status = Tasky.Core.Domain.Status;
+using Tasky.Shared;
+using Status = Tasky.Shared.Status;
 using Task = Tasky.Core.Domain.Entities.Task;
 
 namespace Tasky.Cli.UserInterface;
@@ -104,11 +105,33 @@ public class ConsoleWriter : IConsoleWriter
         {
             var taskIsDone = task.Status.Equals(Status.Done);
 
-            return new Content().Set(task.Text)
+            var taskContent = new Content().Set(task.Text)
                 .EscapeMarkup()
-                .Grey(taskIsDone)
-                .SpacesBefore(1)
-                .BreakLine();
+                .Grey(taskIsDone);
+
+            var priorityContent = new Content();
+
+            switch (task.Priority)
+            {
+                case Priority.High:
+                    taskContent.Red(!taskIsDone).Bold().Underline();
+                    priorityContent.Set("(!!)")
+                        .Bold()
+                        .Red(!taskIsDone)
+                        .SpacesBefore(1);
+                    break;
+                case Priority.Medium:
+                    taskContent.Yellow(!taskIsDone).Underline();
+                    priorityContent.Set("(!)")
+                        .Yellow(!taskIsDone)
+                        .SpacesBefore(1);
+                    break;
+                case Priority.Normal:
+                default:
+                    break;
+            }
+
+            return taskContent.Add(priorityContent).SpacesBefore(1).BreakLine();
         }
     }
 
@@ -130,13 +153,35 @@ public class ConsoleWriter : IConsoleWriter
 
         private static Content GetStepDescription(Step step)
         {
-            var taskIsDone = step.Status.Equals(Status.Done);
+            var stepIsDone = step.Status.Equals(Status.Done);
 
-            return new Content().Set(step.Text)
+            var stepContent = new Content().Set(step.Text)
                 .EscapeMarkup()
-                .Grey(taskIsDone)
-                .SpacesBefore(1)
-                .BreakLine();
+                .Grey(stepIsDone);
+
+            var priorityContent = new Content();
+
+            switch (step.Priority)
+            {
+                case Priority.High:
+                    stepContent.Red(!stepIsDone).Bold().Underline();
+                    priorityContent.Set("(!!)")
+                        .Bold()
+                        .Red(!stepIsDone)
+                        .SpacesBefore(1);
+                    break;
+                case Priority.Medium:
+                    stepContent.Yellow(!stepIsDone).Underline();
+                    priorityContent.Set("(!)")
+                        .Yellow(!stepIsDone)
+                        .SpacesBefore(1);
+                    break;
+                case Priority.Normal:
+                default:
+                    break;
+            }
+
+            return stepContent.Add(priorityContent).SpacesBefore(1).BreakLine();
         }
 
         private static Content GetStepIcon(Step step)

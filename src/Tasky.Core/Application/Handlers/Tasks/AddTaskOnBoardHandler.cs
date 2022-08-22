@@ -31,13 +31,13 @@ public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard>
         var board = await _repository.GetByNameAsync(request.Data.BoardName);
         if (board is null)
         {
-            task = Task.CreateTaskWithText("1", request.Data.Text);
-            board = new Board(request.Data.BoardName, new List<Task> { task });
+            task = Task.CreateTaskWithText("1", request.Data.Text, request.Data.Priority);
+            board = new Board(request.Data.BoardName, new List<Task> {task});
             await _repository.AddAsync(board);
             return Unit.Value;
         }
 
-        task = Task.CreateTaskWithText($"{board.Quantity + 1}", request.Data.Text);
+        task = Task.CreateTaskWithText($"{board.Quantity + 1}", request.Data.Text, request.Data.Priority);
         board.AddTask(task);
         await _repository.UpdateAsync(board);
         return Unit.Value;

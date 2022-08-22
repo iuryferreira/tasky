@@ -17,17 +17,19 @@ public abstract record Dto
 
 public record AddTaskOnBoardRequestDto : Dto
 {
-    public AddTaskOnBoardRequestDto(string boardName, string text, string stepOf)
+    public AddTaskOnBoardRequestDto(string boardName, string text, string stepOf, Priority priority)
     {
         BoardName = boardName;
         Text = text;
         StepOf = stepOf;
+        Priority = priority;
         Validate(this, new Validator());
     }
 
     public string BoardName { get; }
     public string Text { get; }
     public string StepOf { get; }
+    public Priority Priority { get; }
 
     private class Validator : AbstractValidator<AddTaskOnBoardRequestDto>
     {
@@ -43,17 +45,19 @@ public record AddTaskOnBoardRequestDto : Dto
 
 public record AddStepOnTaskRequestDto : Dto
 {
-    public AddStepOnTaskRequestDto(string taskId, string boardName, string text)
+    public AddStepOnTaskRequestDto(string taskId, string boardName, string text, Priority priority)
     {
         TaskId = taskId;
         BoardName = boardName;
         Text = text;
+        Priority = priority;
         Validate(this, new Validator());
     }
 
-    public string TaskId { get; init; }
-    public string BoardName { get; init; }
-    public string Text { get; init; }
+    public string TaskId { get; }
+    public string BoardName { get; }
+    public string Text { get; }
+    public Priority Priority { get; }
 
     private class Validator : AbstractValidator<AddStepOnTaskRequestDto>
     {

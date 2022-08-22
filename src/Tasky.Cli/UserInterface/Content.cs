@@ -24,10 +24,7 @@ public class Content
         return this;
     }
 
-    public override string ToString()
-    {
-        return Text;
-    }
+    public override string ToString() => Text;
 }
 
 public static class ContentExtensions
@@ -59,6 +56,18 @@ public static class ContentExtensions
     public static Content EscapeMarkup(this Content content, bool condition = true)
     {
         if (condition) content.Set(content.Text.EscapeMarkup());
+        return content;
+    }
+
+    public static Content Yellow(this Content content, bool condition = true)
+    {
+        if (condition) content.Set($"[yellow]{content.Text}[/]");
+        return content;
+    }
+
+    public static Content Red(this Content content, bool condition = true)
+    {
+        if (condition) content.Set($"[red]{content.Text}[/]");
         return content;
     }
 

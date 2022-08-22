@@ -2,7 +2,6 @@
 using MediatR;
 using Notie.Contracts;
 using Notie.Models;
-using Tasky.Core.Domain;
 using Tasky.Core.Domain.Entities;
 using Tasky.Core.Infrastructure.Repositories;
 
@@ -39,7 +38,7 @@ public class AddStepOnTaskHandler : IRequestHandler<Requests.AddStepOnTask>
             return Unit.Value;
         }
 
-        var step = new Step($"{task.Id}.{task.Steps.Count + 1}", request.Data.Text, Status.Todo);
+        var step = Step.Create(task, request.Data.Text, request.Data.Priority);
         task.AddStep(step);
 
         var index = board!.Tasks.IndexOf(task);

@@ -21,12 +21,12 @@ public class AddCommand : BaseCommand<AddCommand.Settings>
 
         if (!string.IsNullOrEmpty(settings.StepOf))
         {
-            data = new AddStepOnTaskRequestDto(settings.StepOf, settings.BoardName, settings.Text);
+            data = new AddStepOnTaskRequestDto(settings.StepOf, settings.BoardName, settings.Text, settings.Priority);
             request = new Requests.AddStepOnTask((AddStepOnTaskRequestDto) data);
         }
         else
         {
-            data = new AddTaskOnBoardRequestDto(settings.BoardName, settings.Text, settings.StepOf);
+            data = new AddTaskOnBoardRequestDto(settings.BoardName, settings.Text, settings.StepOf, settings.Priority);
             request = new Requests.AddTaskOnBoard((AddTaskOnBoardRequestDto) data);
         }
 
@@ -65,5 +65,9 @@ public class AddCommand : BaseCommand<AddCommand.Settings>
         [Description("create step for specified task id")]
         [CommandOption("-s|--step-of")]
         public string StepOf { get; init; } = "";
+
+        [Description("set task/step priority")]
+        [CommandOption("-p|--priority")]
+        public Priority Priority { get; init; }
     }
 }

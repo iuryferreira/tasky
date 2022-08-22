@@ -14,10 +14,10 @@ public class Step
         Priority = priority;
     }
 
-    public string Id { get; }
-    public string Text { get; }
+    public string Id { get; private set; }
+    public string Text { get; private set; }
     public Status Status { get; private set; }
-    public Priority Priority { get; }
+    public Priority Priority { get; private set; }
 
 
     public void ChangeStatus(Task task, Status status)
@@ -25,6 +25,11 @@ public class Step
         if (status == Status.InProgress) task.ChangeStatus(Status.InProgress);
         Status = status;
     }
+
+    public void SetId(string id) => Id = id;
+
+    public void SetText(string text) => Text = text;
+    public void SetPriority(Priority priority) => Priority = priority;
 
     public static Step Create(Task task, string text, Priority priority = Priority.Normal) =>
         new($"{task.Id}.{task.Steps.Count + 1}", text, Status.Todo, priority);

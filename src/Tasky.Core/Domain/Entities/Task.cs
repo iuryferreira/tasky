@@ -16,8 +16,8 @@ public class Task
         Priority = priority;
     }
 
-    public string Id { get; }
-    public string Text { get; }
+    public string Id { get; private set; }
+    public string Text { get; private set; }
     public Status Status { get; private set; }
     public Priority Priority { get; private set; }
 
@@ -49,4 +49,19 @@ public class Task
 
         Status = status;
     }
+
+    public void SetId(string id) => Id = id;
+
+    public void SortSteps()
+    {
+        var count = 1;
+        Steps.ForEach(step =>
+        {
+            step.SetId($"{Id}.{count}");
+            count++;
+        });
+    }
+
+    public void SetText(string text) => Text = text;
+    public void SetPriority(Priority priority) => Priority = priority;
 }

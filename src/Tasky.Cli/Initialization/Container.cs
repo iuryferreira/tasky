@@ -37,6 +37,8 @@ public static class Container
         services.AddScoped<DoneCommand>();
         services.AddScoped<BeginCommand>();
         services.AddScoped<ResetCommand>();
+        services.AddScoped<DeleteCommand>();
+        services.AddScoped<EditCommand>();
         services.AddScoped<DefaultCommand>();
     }
 
@@ -47,6 +49,8 @@ public static class Container
         BeginCommand.Configure(configurator);
         ResetCommand.Configure(configurator);
         ListCommand.Configure(configurator);
+        DeleteCommand.Configure(configurator);
+        EditCommand.Configure(configurator);
 
         configurator
             .SetApplicationName("tasky")

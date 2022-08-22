@@ -14,10 +14,22 @@ public class Board
     public string Name { get; }
     public List<Task> Tasks { get; }
 
-    [JsonIgnore] public int Quantity => Tasks.Count;
+    [JsonIgnore]
+    public int Quantity => Tasks.Count;
 
     public void AddTask(Task task)
     {
         Tasks.Add(task);
+    }
+
+    public void SortTasks()
+    {
+        var count = 1;
+        Tasks.ForEach(task =>
+        {
+            task.SetId($"{count}");
+            task.SortSteps();
+            count++;
+        });
     }
 }

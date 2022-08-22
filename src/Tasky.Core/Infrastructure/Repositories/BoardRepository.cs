@@ -8,6 +8,7 @@ public interface IBoardRepository
     Task<IEnumerable<Board>> AddAsync(Board board);
     Task<IEnumerable<Board>> UpdateAsync(Board board);
     Task<List<Board>> AllAsync();
+    System.Threading.Tasks.Task SaveBoardsAsync(IEnumerable<Board> boards);
 }
 
 public class BoardRepository : IBoardRepository
@@ -46,5 +47,10 @@ public class BoardRepository : IBoardRepository
         boards[index] = board;
         await _context.SaveAsync(boards);
         return boards;
+    }
+
+    public async System.Threading.Tasks.Task SaveBoardsAsync(IEnumerable<Board> boards)
+    {
+        await _context.SaveAsync(boards);
     }
 }

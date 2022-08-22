@@ -115,3 +115,100 @@ public record ChangeStepStatusRequestDto : Dto
         }
     }
 }
+
+public record ClearDoneTasksRequestDto : Dto;
+
+public record DeleteTaskRequestDto : Dto
+{
+    public DeleteTaskRequestDto(string taskId, string boardName)
+    {
+        TaskId = taskId;
+        BoardName = boardName;
+        Validate(this, new Validator());
+    }
+
+    public string TaskId { get; }
+    public string BoardName { get; }
+
+    private class Validator : AbstractValidator<DeleteTaskRequestDto>
+    {
+        public Validator()
+        {
+            RuleFor(dto => dto.TaskId).NotEmpty().WithMessage(Messages.English.TaskIdNotEmpty);
+            RuleFor(dto => dto.BoardName).NotEmpty().WithMessage(Messages.English.BoardNotEmpty);
+        }
+    }
+}
+
+public record DeleteStepRequestDto : DeleteTaskRequestDto
+{
+    public DeleteStepRequestDto(string stepId, string taskId, string boardName) : base(taskId, boardName)
+    {
+        StepId = stepId;
+        Validate(this, new Validator());
+    }
+
+    public string StepId { get; }
+
+    private class Validator : AbstractValidator<DeleteStepRequestDto>
+    {
+        public Validator()
+        {
+            RuleFor(dto => dto.StepId).NotEmpty().WithMessage(Messages.English.StepIdNotEmpty);
+        }
+    }
+}
+
+public abstract record EditRequestDto : Dto
+{
+    protected EditRequestDto(string taskId, string boardName, string? text, Priority? priority)
+    {
+        TaskId = taskId;
+        BoardName = boardName;
+        Text = text;
+        Priority = priority;
+        Validate(this, new Validator());
+    }
+
+    public string TaskId { get; }
+    public string BoardName { get; }
+    public string? Text { get; }
+    public Priority? Priority { get; }
+
+    private class Validator : AbstractValidator<EditRequestDto>
+    {
+        public Validator()
+        {
+            RuleFor(dto => dto.TaskId).NotEmpty().WithMessage(Messages.English.TaskIdNotEmpty);
+            RuleFor(dto => dto.BoardName).NotEmpty().WithMessage(Messages.English.BoardNotEmpty);
+        }
+    }
+}
+
+public record EditTaskRequestDto : EditRequestDto
+{
+    public EditTaskRequestDto(string taskId, string boardName, string? text, Priority? priority) : base(taskId,
+        boardName, text, priority)
+    {
+    }
+}
+
+public record EditStepRequestDto : EditRequestDto
+{
+    public EditStepRequestDto(string taskId, string boardName, string stepId, string? text, Priority? priority) : base(
+        taskId, boardName, text, priority)
+    {
+        StepId = stepId;
+        Validate(this, new Validator());
+    }
+
+    public string StepId { get; }
+
+    private class Validator : AbstractValidator<EditStepRequestDto>
+    {
+        public Validator()
+        {
+            RuleFor(dto => dto.StepId).NotEmpty().WithMessage(Messages.English.StepIdNotEmpty);
+        }
+    }
+}

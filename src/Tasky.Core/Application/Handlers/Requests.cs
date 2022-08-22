@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Tasky.Core.Domain;
 using Tasky.Core.Domain.Entities;
 using Tasky.Shared;
 
@@ -18,4 +17,14 @@ public static class Requests
     public record ChangeTaskStatus(ChangeTaskStatusRequestDto Data, Status Status) : Request, IRequest;
 
     public record ChangeStepStatus(ChangeStepStatusRequestDto Data, Status Status) : Request, IRequest;
+
+    public record ClearDoneTasks : Request, IRequest;
+
+    public record DeleteTask(DeleteTaskRequestDto Data) : Request, IRequest;
+
+    public record DeleteStep(DeleteStepRequestDto Data) : Request, IRequest;
+
+    public record EditTask(EditTaskRequestDto Data) : Request, IRequest;
+
+    public record EditStep(EditStepRequestDto Data) : Request, IRequest;
 }

@@ -4,3 +4,4 @@
 *.db
 .vscode
 /Tasky.sln.DotSettings.user
+.vs

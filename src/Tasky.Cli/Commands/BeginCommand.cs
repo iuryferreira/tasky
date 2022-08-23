@@ -56,18 +56,22 @@ public sealed class BeginCommand : BaseCommand<BeginCommand.Settings>
     {
         public const string CommandName = "begin";
         public const string CommandAlias = "bg";
-
         public const string CommandDescription = Messages.English.Begin;
-
         public static readonly string[] CommandExample = {"begin", "1", "-b", "shopping"};
+
+        public Settings(string id, string boardName)
+        {
+            Id = id;
+            BoardName = boardName;
+        }
 
         [Description("task/step id")]
         [CommandArgument(0, "[TASK_ID]")]
-        public string Id { get; init; } = "";
+        public string Id { get; }
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]
 
-        public string BoardName { get; init; } = "";
+        public string BoardName { get; }
     }
 }

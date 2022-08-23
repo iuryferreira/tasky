@@ -1,4 +1,5 @@
 ﻿using Tasky.Core.Domain.Entities;
+using Task = System.Threading.Tasks.Task;
 
 namespace Tasky.Core.Infrastructure.Repositories;
 
@@ -8,7 +9,7 @@ public interface IBoardRepository
     Task<IEnumerable<Board>> AddAsync(Board board);
     Task<IEnumerable<Board>> UpdateAsync(Board board);
     Task<List<Board>> AllAsync();
-    System.Threading.Tasks.Task SaveBoardsAsync(IEnumerable<Board> boards);
+    Task SaveBoardsAsync(IEnumerable<Board> boards);
 }
 
 public class BoardRepository : IBoardRepository
@@ -49,7 +50,7 @@ public class BoardRepository : IBoardRepository
         return boards;
     }
 
-    public async System.Threading.Tasks.Task SaveBoardsAsync(IEnumerable<Board> boards)
+    public async Task SaveBoardsAsync(IEnumerable<Board> boards)
     {
         await _context.SaveAsync(boards);
     }

@@ -61,10 +61,7 @@ public static class Register
             ? Path.Combine(basePath, "Tasky")
             : Path.Combine(basePath, ".config", "tasky");
 
-        if (!Directory.Exists(path))
-        {
-            Directory.CreateDirectory(path);
-        }
+        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
         return new Configuration
         {

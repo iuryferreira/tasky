@@ -52,10 +52,7 @@ public class ConsoleWriter : IConsoleWriter
         public static Content GetBoards(IEnumerable<Board> boards)
         {
             var output = new Content();
-            foreach (var boardContent in boards.Select(board => GetBoard(board).BreakLine()))
-            {
-                output.Add(boardContent);
-            }
+            foreach (var boardContent in boards.Select(board => GetBoard(board).BreakLine())) output.Add(boardContent);
 
             return output;
         }

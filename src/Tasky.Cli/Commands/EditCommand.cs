@@ -55,20 +55,28 @@ public class EditCommand : BaseCommand<EditCommand.Settings>
         public const string CommandDescription = Messages.English.Edit;
         public static readonly string[] CommandExample = {"edit", "1", "-b", "dev"};
 
+        public Settings(string id, string boardName, string? text, Priority? priority)
+        {
+            Id = id;
+            BoardName = boardName;
+            Text = text;
+            Priority = priority;
+        }
+
         [Description("task/step id")]
         [CommandArgument(0, "[TASK_ID]")]
-        public string Id { get; init; } = "";
+        public string Id { get; }
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]
-        public string BoardName { get; init; } = "";
+        public string BoardName { get; }
 
         [Description("set task/step content")]
         [CommandOption("-t|--text")]
-        public string? Text { get; init; }
+        public string? Text { get; }
 
         [Description("set task/step priority")]
         [CommandOption("-p|--priority")]
-        public Priority? Priority { get; init; }
+        public Priority? Priority { get; }
     }
 }

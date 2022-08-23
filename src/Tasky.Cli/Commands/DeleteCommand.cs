@@ -67,16 +67,23 @@ public class DeleteCommand : BaseCommand<DeleteCommand.Settings>
         public const string CommandDescription = Messages.English.Delete;
         public static readonly string[] CommandExample = {"delete", "1", "-b", "dev"};
 
+        public Settings(string id, string boardName, bool clear)
+        {
+            Id = id;
+            BoardName = boardName;
+            Clear = clear;
+        }
+
         [Description("task/step id")]
         [CommandArgument(0, "[TASK_ID]")]
-        public string Id { get; init; } = "";
+        public string Id { get; }
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]
-        public string BoardName { get; init; } = "";
+        public string BoardName { get; }
 
         [Description("board to which the task belongs")]
         [CommandOption("-c|--clear")]
-        public bool Clear { get; init; }
+        public bool Clear { get; }
     }
 }

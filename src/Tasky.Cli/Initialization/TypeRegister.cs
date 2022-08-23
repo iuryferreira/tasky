@@ -11,10 +11,7 @@ public sealed class TypeRegister : ITypeRegistrar
         _builder = builder;
     }
 
-    public ITypeResolver Build()
-    {
-        return new TypeResolver(Container.Provider);
-    }
+    public ITypeResolver Build() => new TypeResolver(Container.Provider);
 
     public void Register(Type service, Type implementation)
     {
@@ -48,8 +45,5 @@ public sealed class TypeResolver : ITypeResolver, IDisposable
         if (_provider is IDisposable disposable) disposable.Dispose();
     }
 
-    public object? Resolve(Type? type)
-    {
-        return type == null ? null : _provider.GetService(type);
-    }
+    public object? Resolve(Type? type) => type == null ? null : _provider.GetService(type);
 }

@@ -53,21 +53,29 @@ public class AddCommand : BaseCommand<AddCommand.Settings>
         public const string CommandDescription = Messages.English.Add;
         public static readonly string[] CommandExample = {"add", "add tomato to basket", "-b", "market", "-s", "1"};
 
+        public Settings(string text, string boardName, string stepOf, Priority priority)
+        {
+            Text = text;
+            BoardName = boardName;
+            StepOf = stepOf;
+            Priority = priority;
+        }
+
         [Description("task/step content")]
         [CommandArgument(0, "[TEXT]")]
-        public string Text { get; init; } = "";
+        public string Text { get; }
 
         [Description("board to which the task/step belongs")]
         [CommandOption("-b|--board")]
-        public string BoardName { get; init; } = "";
+        public string BoardName { get; }
 
 
         [Description("create step for specified task id")]
         [CommandOption("-s|--step-of")]
-        public string StepOf { get; init; } = "";
+        public string StepOf { get; }
 
         [Description("set task/step priority")]
         [CommandOption("-p|--priority")]
-        public Priority Priority { get; init; }
+        public Priority Priority { get; }
     }
 }

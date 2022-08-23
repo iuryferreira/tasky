@@ -76,8 +76,8 @@ public record ChangeTaskStatusRequestDto : Dto
         Validate(this, new Validator());
     }
 
-    public string TaskId { get; init; }
-    public string BoardName { get; init; }
+    public string TaskId { get; }
+    public string BoardName { get; }
 
     private class Validator : AbstractValidator<ChangeTaskStatusRequestDto>
     {
@@ -100,9 +100,9 @@ public record ChangeStepStatusRequestDto : Dto
         Validate(this, new Validator());
     }
 
-    public string StepId { get; init; }
-    public string TaskId { get; init; }
-    public string BoardName { get; init; }
+    public string StepId { get; }
+    public string TaskId { get; }
+    public string BoardName { get; }
 
     private class Validator : AbstractValidator<ChangeStepStatusRequestDto>
     {
@@ -113,8 +113,6 @@ public record ChangeStepStatusRequestDto : Dto
         }
     }
 }
-
-public record ClearDoneTasksRequestDto : Dto;
 
 public record DeleteTaskRequestDto : Dto
 {

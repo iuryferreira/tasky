@@ -58,13 +58,19 @@ public sealed class ResetCommand : BaseCommand<ResetCommand.Settings>
         public const string CommandDescription = Messages.English.Reset;
         public static readonly string[] CommandExample = {"reset", "1", "-b", "shopping"};
 
+        public Settings(string id, string boardName)
+        {
+            Id = id;
+            BoardName = boardName;
+        }
+
         [Description("task/step id")]
         [CommandArgument(0, "[TASK_ID]")]
-        public string Id { get; init; } = "";
+        public string Id { get; }
 
         [Description("board to which the task belongs")]
         [CommandOption("-b|--board")]
 
-        public string BoardName { get; init; } = "";
+        public string BoardName { get; }
     }
 }

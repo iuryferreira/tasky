@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using MediatR;
+﻿using MediatR;
 using Notie.Contracts;
 using Tasky.Cli.UserInterface;
 
@@ -24,14 +23,5 @@ public abstract class BaseCommand<T> : AsyncCommand<T> where T : CommandSettings
         if (!_notifier.HasNotifications()) return await action.Invoke();
         Writer.ShowErrors(_notifier.All());
         return 0;
-    }
-
-    protected DateTime? ParseDate(string? dateInString)
-    {
-        DateTime? date = null;
-        if (!string.IsNullOrEmpty(dateInString))
-            date = DateTime.Parse(dateInString, styles: DateTimeStyles.AssumeLocal);
-
-        return date;
     }
 }

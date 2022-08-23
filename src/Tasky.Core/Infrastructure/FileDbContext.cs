@@ -22,10 +22,7 @@ public class FileDbContext : IContext
 
     public async Task<IEnumerable<Board>> ReadAsync()
     {
-        if (!File.Exists(_configuration.DatabasePath))
-        {
-            await SaveAsync(Array.Empty<Board>());
-        }
+        if (!File.Exists(_configuration.DatabasePath)) await SaveAsync(Array.Empty<Board>());
 
         var data = await File.ReadAllTextAsync(_configuration.DatabasePath);
         var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
@@ -37,4 +34,4 @@ public class FileDbContext : IContext
 public record Database(DateTime UpdatedAt, IEnumerable<Board> Boards)
 {
     public static Database CreateEmpty() => new(DateTime.Now, new List<Board>());
-};
+}

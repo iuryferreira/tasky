@@ -8,7 +8,7 @@ public static class Requests
 {
     public abstract record Request;
 
-    public record ListBoardsWithTasks : Request, IRequest<IEnumerable<Board>>;
+    public record ListBoardsWithTasks : Request, IRequest<IList<Board>>;
 
     public record AddTaskOnBoard(AddTaskOnBoardRequestDto Data) : Request, IRequest;
 

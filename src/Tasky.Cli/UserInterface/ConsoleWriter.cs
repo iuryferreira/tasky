@@ -9,7 +9,7 @@ namespace Tasky.Cli.UserInterface;
 
 public interface IConsoleWriter
 {
-    void ShowBoards(IEnumerable<Board> boards);
+    void ShowBoards(IList<Board> boards);
     void ShowErrors(IEnumerable<Notification> notifications);
 }
 
@@ -22,8 +22,16 @@ public class ConsoleWriter : IConsoleWriter
         _render = render;
     }
 
-    public void ShowBoards(IEnumerable<Board> boards)
+    public void ShowBoards(IList<Board> boards)
     {
+        if (boards.Count.Equals(0))
+        {
+            var notification =
+                new Notification("Boards", "There are no boards created. Add your first task to see them.");
+            ShowErrors(new[] {notification});
+            return;
+        }
+
         _render.Print("\n");
         var content = Boards.GetBoards(boards);
         _render.Print(content);
@@ -44,9 +52,8 @@ public class ConsoleWriter : IConsoleWriter
         public static Content GetBoards(IEnumerable<Board> boards)
         {
             var output = new Content();
-            foreach (var board in boards)
+            foreach (var boardContent in boards.Select(board => GetBoard(board).BreakLine()))
             {
-                var boardContent = GetBoard(board).BreakLine();
                 output.Add(boardContent);
             }
 
@@ -56,7 +63,7 @@ public class ConsoleWriter : IConsoleWriter
         private static Content GetBoard(Board board)
         {
             var tasksCompleted = board.Tasks.Count(x => x.Status == Status.Done);
-            var boardName = new Content().Set(board.Name).Bold().Underline().SpacesBefore(2);
+            var boardName = new Content().Set($"@{board.Name}").Bold().Underline().SpacesBefore(2);
             var tasksStatus = new Content()
                 .Set($"[{tasksCompleted}/{board.Quantity}]")
                 .EscapeMarkup()

@@ -4,7 +4,6 @@ using Notie.Contracts;
 using Tasky.Cli.Contracts;
 using Tasky.Cli.UserInterface;
 using Tasky.Core.Application.Handlers;
-using Tasky.Core.Domain;
 using Tasky.Shared;
 
 namespace Tasky.Cli.Commands;

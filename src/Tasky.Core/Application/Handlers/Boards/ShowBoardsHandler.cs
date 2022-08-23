@@ -6,7 +6,7 @@ using Tasky.Core.Infrastructure.Repositories;
 namespace Tasky.Core.Application.Handlers.Boards;
 
 [UsedImplicitly]
-public class ShowBoardsHandler : IRequestHandler<Requests.ListBoardsWithTasks, IEnumerable<Board>>
+public class ShowBoardsHandler : IRequestHandler<Requests.ListBoardsWithTasks, IList<Board>>
 {
     private readonly IBoardRepository _repository;
 
@@ -15,7 +15,7 @@ public class ShowBoardsHandler : IRequestHandler<Requests.ListBoardsWithTasks, I
         _repository = repository;
     }
 
-    public async Task<IEnumerable<Board>> Handle(Requests.ListBoardsWithTasks request,
+    public async Task<IList<Board>> Handle(Requests.ListBoardsWithTasks request,
         CancellationToken cancellationToken)
     {
         var boards = await _repository.AllAsync();

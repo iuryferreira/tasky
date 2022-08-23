@@ -35,10 +35,8 @@ public record AddTaskOnBoardRequestDto : Dto
     {
         public Validator()
         {
-            RuleFor(dto => dto.BoardName)
-                .NotEmpty().WithMessage(Messages.English.BoardNotEmpty);
-            RuleFor(dto => dto.Text)
-                .NotEmpty().WithMessage(Messages.English.TaskNotEmpty);
+            RuleFor(dto => dto.BoardName).NotEmpty().WithMessage(Messages.English.BoardNotEmpty);
+            RuleFor(dto => dto.Text).NotEmpty().WithMessage(Messages.English.TaskNotEmpty);
         }
     }
 }
@@ -63,8 +61,8 @@ public record AddStepOnTaskRequestDto : Dto
     {
         public Validator()
         {
-            RuleFor(dto => dto.TaskId).NotEmpty();
-            RuleFor(dto => dto.Text).NotEmpty();
+            RuleFor(dto => dto.TaskId).NotEmpty().WithMessage(Messages.English.TaskIdNotEmpty);
+            RuleFor(dto => dto.Text).NotEmpty().WithMessage(Messages.English.TaskNotEmpty);
         }
     }
 }
@@ -110,8 +108,8 @@ public record ChangeStepStatusRequestDto : Dto
     {
         public Validator()
         {
-            RuleFor(dto => dto.TaskId).NotEmpty();
-            RuleFor(dto => dto.StepId).NotEmpty();
+            RuleFor(dto => dto.TaskId).NotEmpty().WithMessage(Messages.English.TaskIdNotEmpty);
+            RuleFor(dto => dto.StepId).NotEmpty().WithMessage(Messages.English.StepIdNotEmpty);
         }
     }
 }

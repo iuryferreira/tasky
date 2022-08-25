@@ -20,5 +20,11 @@ public static class Messages
         public const string TaskNotEmpty = "The task/step description cannot be empty.";
         public const string BoardNotEmpty = "The board name must be provided via the -b parameter";
         public const string StepIdNotEmpty = "The step id cannot be empty.";
+
+
+        public const string StatisticsProgress = "of all tasks complete.";
+        public const string StatisticsDone = "done";
+        public const string StatisticsInProgress = "in-progress";
+        public const string StatisticsPending = "pending";
     }
 }

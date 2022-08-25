@@ -28,7 +28,7 @@ public class ConsoleWriter : IConsoleWriter
         {
             var notification =
                 new Notification("Boards", "There are no boards created. Add your first task to see them.");
-            ShowErrors(new[] {notification});
+            ShowErrors(new[] { notification });
             return;
         }
 
@@ -49,11 +49,11 @@ public class ConsoleWriter : IConsoleWriter
 
     private static class Boards
     {
-        public static Content GetBoards(IEnumerable<Board> boards)
+        public static Content GetBoards(IList<Board> boards)
         {
             var output = new Content();
             foreach (var boardContent in boards.Select(board => GetBoard(board).BreakLine())) output.Add(boardContent);
-
+            output.Add(GetBoardsStatistics(boards)).BreakLine(2);
             return output;
         }
 
@@ -70,6 +70,37 @@ public class ConsoleWriter : IConsoleWriter
 
             var tasks = Tasks.GetTasks(board.Tasks);
             return new Content().Add(boardName).Add(tasksStatus).Add(tasks);
+        }
+
+        private static Content GetBoardsStatistics(IEnumerable<Board> boards)
+        {
+            var tasks = boards.SelectMany(x => x.Tasks).ToList();
+            var tasksDoneCount = tasks.Count(x => x.Status.Equals(Status.Done));
+            var tasksInProgressCount = tasks.Count(x => x.Status.Equals(Status.InProgress));
+            var tasksTodoCount = tasks.Count(x => x.Status.Equals(Status.Todo));
+
+            var percentageValue = Math.Ceiling(tasksDoneCount / (decimal)tasks.Count * 100);
+            var percentageContent = new Content()
+                .Set($"{percentageValue}%")
+                .SpacesBefore(1)
+                .Yellow();
+
+            var progress = new Content()
+                .SpacesBefore(1)
+                .Add($"{percentageContent} ")
+                .Add(Messages.English.StatisticsProgress)
+                .Grey()
+                .BreakLine(2);
+            var status = new Content()
+                .Add($"{tasksDoneCount} {Messages.English.StatisticsDone} · ")
+                .Green()
+                .SpacesBefore(2)
+                .Add($"{tasksInProgressCount} {Messages.English.StatisticsInProgress} · ")
+                .SlateBlue()
+                .Add($"{tasksTodoCount} {Messages.English.StatisticsPending}")
+                .Purple();
+
+            return new Content().Add(progress).Add(status);
         }
     }
 

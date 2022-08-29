@@ -26,7 +26,9 @@ public class DeleteTaskHandler : IRequestHandler<Requests.DeleteTask>
             return Unit.Value;
         }
 
-        var board = await _repository.GetByNameAsync(request.Data.BoardName);
+        var boards = await _repository.AllAsync();
+
+        var board = boards.Find(b => b.Name.Equals(request.Data.BoardName));
 
         var task = board?.Tasks.Find(t => t.Id.Equals(request.Data.TaskId));
         if (task is null)
@@ -37,8 +39,16 @@ public class DeleteTaskHandler : IRequestHandler<Requests.DeleteTask>
         }
 
         board?.Tasks.Remove(task);
-        board?.SortTasks();
-        await _repository.UpdateAsync(board!);
+
+        if (board!.Tasks.Count.Equals(0))
+        {
+            boards.Remove(board);
+            await _repository.SaveBoardsAsync(boards);
+            return Unit.Value;
+        }
+
+        board.SortTasks();
+        await _repository.UpdateAsync(board);
         return Unit.Value;
     }
 }

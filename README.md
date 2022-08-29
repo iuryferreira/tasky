@@ -27,17 +27,44 @@
 
 <br>
 Tasky is a task manager made for command lines, bringing the possibility for the user to organize himself in a simple way just using his terminal and a keyboard.
+It is cross-platform and can be used both on Windows with Poweshell/CMD or on linux with Bash/Fish/Zsh among others.
 
-### Features:
 
-- ~~Add~~
-- ~~Change Status~~
-- Add Priority
-- Delete (Clear)
-- Edit
+### Usage
+
+After having downloaded and executed the installation script, just open the terminal and execute the application commands, 
+which can be consulted with the command `tasky --help`. 
+
+After downloading and executing the installation script, just open the terminal and execute the application's commands, which can be consulted with the command tasky --help. Through the commands you will be able to add, remove, start, complete, change priority and edit your tasks. 
+We have complete management from the command line. 
+
+#### Add
+
+To add a task you need to run the `add` command. You will also need to inform the name of the board that your task will be inserted, and if it doesn't exist, it will be created automatically.
+See the example below:
+
+```powershell
+tasky add "buy fruit at the market" --board "daily"
+```
+The terminal will display:
+
+![Add Output](.github/images/examples/add_01.png)
+
+##### Priority
+
+You can also set a priority for your task when you try to add it. It can be normal (default), medium and high. See the example below:
+
+```powershell
+tasky add "buy fruit at the market" --board "daily" --priority high
+```
+The terminal will display:
+
+![Add Output](.github/images/examples/add_02.png)
+
+High priority is in red and medium is in yellow.
+
 
 ### Improvements:
 
-- ~~being able to add steps just by informing the task id and adding the `--step-of` tag~~
 - Undo e redo last operation
 - Log operations

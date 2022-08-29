@@ -47,6 +47,19 @@ public static class ContentExtensions
         return content;
     }
 
+
+    public static Content Dimmed(this Content content, bool condition = true)
+    {
+        if (condition) content.Set($"[dim]{content.Text}[/]");
+        return content;
+    }
+
+    public static Content StrikeThrough(this Content content, bool condition = true)
+    {
+        if (condition) content.Set($"[strikethrough]{content.Text}[/]");
+        return content;
+    }
+
     public static Content SpacesBefore(this Content content, int quantity, bool condition = true)
     {
         if (condition) content.Set(new string(' ', quantity) + content.Text);
@@ -91,7 +104,7 @@ public static class ContentExtensions
 
     public static Content Purple(this Content content, bool condition = true)
     {
-        if (condition) content.Set($"[purple]{content.Text}[/]");
+        if (condition) content.Set($"[violet]{content.Text}[/]");
         return content;
     }
 

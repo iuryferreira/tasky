@@ -28,7 +28,7 @@ public class ConsoleWriter : IConsoleWriter
         {
             var notification =
                 new Notification("Boards", "There are no boards created. Add your first task to see them.");
-            ShowErrors(new[] { notification });
+            ShowErrors(new[] {notification});
             return;
         }
 
@@ -66,7 +66,7 @@ public class ConsoleWriter : IConsoleWriter
                 .EscapeMarkup()
                 .Grey()
                 .SpacesBefore(1)
-                .BreakLine();
+                .BreakLine(2);
 
             var tasks = Tasks.GetTasks(board.Tasks);
             return new Content().Add(boardName).Add(tasksStatus).Add(tasks);
@@ -79,7 +79,7 @@ public class ConsoleWriter : IConsoleWriter
             var tasksInProgressCount = tasks.Count(x => x.Status.Equals(Status.InProgress));
             var tasksTodoCount = tasks.Count(x => x.Status.Equals(Status.Todo));
 
-            var percentageValue = Math.Ceiling(tasksDoneCount / (decimal)tasks.Count * 100);
+            var percentageValue = Math.Ceiling(tasksDoneCount / (decimal) tasks.Count * 100);
             var percentageContent = new Content()
                 .Set($"{percentageValue}%")
                 .SpacesBefore(1)
@@ -90,7 +90,7 @@ public class ConsoleWriter : IConsoleWriter
                 .Add($"{percentageContent} ")
                 .Add(Messages.English.StatisticsProgress)
                 .Grey()
-                .BreakLine(2);
+                .BreakLine();
             var status = new Content()
                 .Add($"{tasksDoneCount} {Messages.English.StatisticsDone} · ")
                 .Green()
@@ -142,23 +142,35 @@ public class ConsoleWriter : IConsoleWriter
 
             var taskContent = new Content().Set(task.Text)
                 .EscapeMarkup()
-                .Grey(taskIsDone);
+                .Dimmed(taskIsDone);
 
             var priorityContent = new Content();
 
             switch (task.Priority)
             {
                 case Priority.High:
-                    taskContent.Red(!taskIsDone).Bold().Underline();
-                    priorityContent.Set("(!!)")
-                        .Bold()
+                    taskContent
                         .Red(!taskIsDone)
+                        .Bold(!taskIsDone)
+                        .Underline(!taskIsDone)
+                        .StrikeThrough(taskIsDone);
+
+                    priorityContent.Set("(!!)")
+                        .Bold(!taskIsDone)
+                        .Dimmed(taskIsDone)
+                        .Red(!taskIsDone)
+                        .StrikeThrough(taskIsDone)
                         .SpacesBefore(1);
                     break;
                 case Priority.Medium:
-                    taskContent.Yellow(!taskIsDone).Underline();
+                    taskContent
+                        .Yellow(!taskIsDone)
+                        .Underline(!taskIsDone)
+                        .StrikeThrough(taskIsDone);
                     priorityContent.Set("(!)")
                         .Yellow(!taskIsDone)
+                        .Dimmed(taskIsDone)
+                        .StrikeThrough(taskIsDone)
                         .SpacesBefore(1);
                     break;
                 case Priority.Normal:
@@ -192,23 +204,34 @@ public class ConsoleWriter : IConsoleWriter
 
             var stepContent = new Content().Set(step.Text)
                 .EscapeMarkup()
-                .Grey(stepIsDone);
+                .Dimmed(stepIsDone);
 
             var priorityContent = new Content();
 
             switch (step.Priority)
             {
                 case Priority.High:
-                    stepContent.Red(!stepIsDone).Bold().Underline();
-                    priorityContent.Set("(!!)")
-                        .Bold()
+                    stepContent
                         .Red(!stepIsDone)
+                        .Bold(!stepIsDone)
+                        .Underline(!stepIsDone)
+                        .StrikeThrough(stepIsDone);
+                    priorityContent.Set("(!!)")
+                        .Bold(!stepIsDone)
+                        .Red(!stepIsDone)
+                        .Dimmed(stepIsDone)
+                        .StrikeThrough(stepIsDone)
                         .SpacesBefore(1);
                     break;
                 case Priority.Medium:
-                    stepContent.Yellow(!stepIsDone).Underline();
+                    stepContent
+                        .Yellow(!stepIsDone)
+                        .Underline(!stepIsDone)
+                        .StrikeThrough(stepIsDone);
                     priorityContent.Set("(!)")
                         .Yellow(!stepIsDone)
+                        .Dimmed(stepIsDone)
+                        .StrikeThrough(stepIsDone)
                         .SpacesBefore(1);
                     break;
                 case Priority.Normal:

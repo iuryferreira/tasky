@@ -65,6 +65,11 @@ The terminal will display:
 
 ![Add Output](.github/images/examples/add_03.png)
 
+
+### List
+
+To list your tasks just run tasky without any command, or use the `list` command. Your tasks are automatically listed with each operation performed.
+
 #### Priority
 
 You can also set a priority for your task or step when you try to add it. It can be normal (default), medium and high. See the example below:
@@ -118,7 +123,75 @@ When it starts, the board indicates which tasks are in progress, see the termina
 
 ![Add Output](.github/images/examples/done_02.png)
 
-### Improvements:
+### Reset
 
-- Undo e redo last operation
-- Log operations
+You can bring the task to the initial state (todo) through the `reset` command. For this you need to inform the id and the task/step board. See the example below:
+
+```powershell
+
+# This will reset the second step of the first task of the board daily
+tasky reset 1.2 --board daily
+```
+
+The terminal will display:
+
+![Add Output](.github/images/examples/reset_01.png)
+
+If you reset the task and there are still complete or in-progress steps, they will all be marked as todo. See below:
+
+```powershell
+# This will reset the first task and yours steps of the daily board
+tasky reset 1 --board daily
+```
+
+The terminal will display:
+
+![Add Output](.github/images/examples/reset_02.png)
+
+
+### Delete
+
+You can delete a task through the `delete` command. For this you need to inform the id and the task/step board.  See the example below:
+
+```powershell
+
+# This will delete the second step of the first task of the board daily
+tasky delete 1.2 --board daily
+```
+
+If you remove the task all steps will also be removed. See below:
+
+```powershell
+# This will reset the first task and yours steps of the daily board
+tasky delete 1 --board daily
+```
+
+You can also remove all completed tasks via the `delete --clear` command.
+
+### Edit
+
+If you want to change some text or priority of a task, you can use the `edit` command. For this you will need to inform the task/step id as well as the text (via the `--text` parameter) and/or the priority (via the `--priority` parameter) you want to define. See the example below:
+
+```powershell
+# You can change the text:
+tasky edit 1 --board daily --text "my edited task"
+
+# change priority:
+tasky edit 1 --board daily --priority "high"
+
+# Or both at the same time:
+tasky edit 1 --board daily --text "my edited task" --priority "high"
+
+```
+
+## Goals
+
+This project was created with the intention of facilitating the management of tasks in command-line environments, as well as for users who have this preference. It's a one-man project, but I hope more people contribute to this process, whether it's code, ideas, or fixes.
+
+### Next Goals
+
+There are a number of improvements to be made, see the ones that are already on the way:
+
+- Undo and redo changes
+- Cloud backups
+- Integration with Google Tasks and Microsoft Todo

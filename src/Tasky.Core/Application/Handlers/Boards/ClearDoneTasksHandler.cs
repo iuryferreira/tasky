@@ -24,6 +24,7 @@ public class ClearDoneTasksHandler : IRequestHandler<Requests.ClearDoneTasks>
             board.SortTasks();
         }
 
+        boards.RemoveAll(board => board.IsEmpty());
         await _repository.SaveBoardsAsync(boards);
         return Unit.Value;
     }

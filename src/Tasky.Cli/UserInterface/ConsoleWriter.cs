@@ -62,7 +62,7 @@ public class ConsoleWriter : IConsoleWriter
             var tasksCompleted = board.Tasks.Count(x => x.Status == Status.Done);
             var boardName = new Content().Set($"@{board.Name}").Bold().Underline().SpacesBefore(2);
             var tasksStatus = new Content()
-                .Set($"[{tasksCompleted}/{board.Quantity}]")
+                .Set($"[{tasksCompleted}/{board.TasksQuantity}]")
                 .EscapeMarkup()
                 .Grey()
                 .SpacesBefore(1)

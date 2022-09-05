@@ -23,7 +23,7 @@ public class Step
     public void ChangeStatus(Task task, Status status)
     {
         var otherStepsDoneOrInProgress =
-            task.Steps.Any(s => (s.Status is Status.Done or Status.InProgress) && !s.Id.Equals(Id));
+            task.Steps.Any(s => s.Status is Status.Done or Status.InProgress && !s.Id.Equals(Id));
         if (status == Status.InProgress || otherStepsDoneOrInProgress) task.ChangeStatus(Status.InProgress);
         Status = status;
     }

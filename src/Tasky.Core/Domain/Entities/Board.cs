@@ -15,12 +15,14 @@ public class Board
     public List<Task> Tasks { get; }
 
     [JsonIgnore]
-    public int Quantity => Tasks.Count;
+    public int TasksQuantity => Tasks.Count;
 
     public void AddTask(Task task)
     {
         Tasks.Add(task);
     }
+
+    public bool IsEmpty() => TasksQuantity == 0;
 
     public void SortTasks()
     {

@@ -37,7 +37,7 @@ public class AddTaskOnBoardHandler : IRequestHandler<Requests.AddTaskOnBoard>
             return Unit.Value;
         }
 
-        task = Task.CreateTaskWithText($"{board.Quantity + 1}", request.Data.Text, request.Data.Priority);
+        task = Task.CreateTaskWithText($"{board.TasksQuantity + 1}", request.Data.Text, request.Data.Priority);
         board.AddTask(task);
         await _repository.UpdateAsync(board);
         return Unit.Value;

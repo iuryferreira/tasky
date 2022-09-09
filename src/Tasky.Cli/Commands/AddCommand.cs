@@ -69,7 +69,6 @@ public class AddCommand : BaseCommand<AddCommand.Settings>
         [CommandOption("-b|--board")]
         public string BoardName { get; }
 
-
         [Description("create step for specified task id")]
         [CommandOption("-s|--step-of")]
         public string StepOf { get; }

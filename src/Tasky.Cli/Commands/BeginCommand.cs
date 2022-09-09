@@ -42,7 +42,6 @@ public sealed class BeginCommand : BaseCommand<BeginCommand.Settings>
         });
     }
 
-
     public static void Configure(IConfigurator configurator)
     {
         configurator.AddCommand<BeginCommand>(Settings.CommandName)

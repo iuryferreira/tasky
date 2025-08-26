@@ -40,6 +40,7 @@ public static class Container
         services.AddScoped<DeleteCommand>();
         services.AddScoped<EditCommand>();
         services.AddScoped<DefaultCommand>();
+        services.AddScoped<SetPathCommand>();
     }
 
     public static void ConfigureCommands(IConfigurator configurator)
@@ -51,6 +52,7 @@ public static class Container
         ListCommand.Configure(configurator);
         DeleteCommand.Configure(configurator);
         EditCommand.Configure(configurator);
+        SetPathCommand.Configure(configurator);
 
         configurator
             .SetApplicationName("tasky")

@@ -31,42 +31,42 @@ public static class Register
 
     private static Configuration GetConfiguration()
     {
+        var basePath = OperatingSystem.IsWindows()
+            ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Tasky")
+            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config", "tasky");
+
+        if (!Directory.Exists(basePath))
+            Directory.CreateDirectory(basePath);
+
         var configurationBuilder = new ConfigurationBuilder()
-            .AddJsonFile(Configuration.SettingsFilename);
+            .SetBasePath(basePath)
+            .AddJsonFile(Configuration.SettingsFilename, optional: false, reloadOnChange: true)
+            .AddJsonFile("tasky.override.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables("TASKY_");
 
 #if DEBUG
-        configurationBuilder.AddJsonFile(Configuration.DevelopmentSettingsFilename);
+        configurationBuilder.AddJsonFile(Configuration.DevelopmentSettingsFilename, optional: true, reloadOnChange: true);
 #endif
 
         var config = configurationBuilder.Build();
 
         var useLocalFile = Convert.ToBoolean(config[Configuration.UseLocalFileProperty] ?? "true");
+        var overridePath = config["DatabasePathOverride"];
 
-        string path;
-        if (useLocalFile)
+        if (!string.IsNullOrEmpty(overridePath))
         {
-            path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
             return new Configuration
             {
-                UseLocalFile = Convert.ToBoolean(useLocalFile),
-                DatabasePath = Path.Combine(path, Configuration.DatabaseFilename)
+                UseLocalFile = useLocalFile,
+                DatabasePath = Path.Combine(overridePath, Configuration.DatabaseFilename)
             };
         }
 
-        var basePath = OperatingSystem.IsWindows()
-            ? Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-            : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
-        path = OperatingSystem.IsWindows()
-            ? Path.Combine(basePath, "Tasky")
-            : Path.Combine(basePath, ".config", "tasky");
-
-        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-
         return new Configuration
         {
-            UseLocalFile = Convert.ToBoolean(useLocalFile),
-            DatabasePath = Path.Combine(path, Configuration.DatabaseFilename)
+            UseLocalFile = useLocalFile,
+            DatabasePath = Path.Combine(basePath, Configuration.DatabaseFilename)
         };
     }
+
 }

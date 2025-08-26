@@ -11,6 +11,8 @@ public interface IConsoleWriter
 {
     void ShowBoards(IList<Board> boards);
     void ShowErrors(IEnumerable<Notification> notifications);
+    void WriteSuccess(string message) => AnsiConsole.MarkupLine($"[green]{message}[/]");
+    void WriteInfo(string message) => AnsiConsole.MarkupLine($"[blue]{message}[/]");
 }
 
 public class ConsoleWriter : IConsoleWriter
@@ -26,8 +28,7 @@ public class ConsoleWriter : IConsoleWriter
     {
         if (boards.Count.Equals(0))
         {
-            var notification =
-                new Notification("Boards", "There are no boards created. Add your first task to see them.");
+            var notification = new Notification("Boards", "There are no boards created. Add your first task to see them.");
             ShowErrors(new[] {notification});
             return;
         }

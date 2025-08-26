@@ -27,4 +27,6 @@ public static class Requests
     public record EditTask(EditTaskRequestDto Data) : Request, IRequest;
 
     public record EditStep(EditStepRequestDto Data) : Request, IRequest;
+    
+    public record SetDatabasePath(string Path) : Request, IRequest;
 }
